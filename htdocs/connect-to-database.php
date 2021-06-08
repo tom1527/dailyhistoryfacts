@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'marketproject';
+$dbname = 'interestingfacts';
 $user = 'root';
 $password = 'password';
 $charset = 'utf8';
