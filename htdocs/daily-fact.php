@@ -6,30 +6,27 @@
     </head>
     <body>
         <h1>Interesting Fact</h1>
+        <p>This page displays an interesting fact that occured on today's date sometime in the past.</p>
+        <h4>Today's date is <?php echo date("F jS"); ?></h4>
+        <h4>On this date in the past:</h4>
+
+        <?php
+            require ("connect-to-database.php");
+            global $dbc;
+            $currentDate = date("Y-m-d");
+            $result = mysqli_query($dbc, "SELECT * FROM facts WHERE date = '$currentDate';");
+            $factInfo = mysqli_fetch_assoc($result);
+        ?>
+
+        <p>
+            <?php 
+                if ($factInfo) {
+                    echo $factInfo['fact'];
+                } else {
+                    echo "error";
+                }
+            ?>
+        </p>
     </body>
-
-<?php
-
-require ("connect-to-database.php");
-global $dbc;
-echo date("jS F");
-?> <br> <?php
-echo "test";
-?> <br> <?php
-$currentDate = date("Y-m-d");
-echo $currentDate;
-?> <br> <?php
-$result = mysqli_query($dbc, "SELECT * FROM facts WHERE date = '$currentDate';");
-$factInfo = mysqli_fetch_assoc($result);
-if ($row) {
-    echo $factInfo['fact'];
-} else {
-    echo "error";
-}
-
-?>
-
-
-
 
 </html>

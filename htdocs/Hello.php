@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
     <body>
         Hello <?php echo $_GET["name"];?>
