@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html>  
+<html>
+    <div class="navbar">
+        <a class="active" href="form.php">Form</a>
+        <a href="daily-fact.php">Daily Fact</a>
+        <a href="test.php">Test</a>
+    </div>  
     <head>
         <title>Fact of the Day</title>
         <link rel="stylesheet" href="assests/style.css">
