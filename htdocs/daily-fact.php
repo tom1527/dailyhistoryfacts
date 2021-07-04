@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
     <div class="navbar">
+        <a href="index.html">Index</a>
         <a class="active" href="form.php">Form</a>
         <a href="daily-fact.php">Daily Fact</a>
         <a href="test.php">Test</a>
     </div>  
+
     <head>
         <title>Fact of the Day</title>
         <link rel="stylesheet" href="assests/style.css">
@@ -19,7 +21,11 @@
             require ("connect-to-database.php");
             global $dbc;
             $currentDate = date("Y-m-d");
-            $result = mysqli_query($dbc, "SELECT * FROM facts WHERE date = '$currentDate';");
+            echo date("j");
+            echo date("n");
+            $currentDay = date("j");
+            $currentMonth = date("n");
+            $result = mysqli_query($dbc, "SELECT * FROM 'facts' WHERE day = '$currentDay';");
             $factInfo = mysqli_fetch_assoc($result);
         ?>
 
