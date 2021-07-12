@@ -5,3 +5,61 @@ h1 {
 .bluetitle {
     color: blue;
 }
+
+body {
+    background-color: lightgray;
+}
+
+header {
+    background-color: blue;
+    padding: 1px 100px;
+}
+
+footer {
+   background-color: blue;
+   padding: 1px 20px;
+}
+
+.navbar a:link{
+    font: bold;
+    color: red;
+    text-decoration: none;
+    padding: 14px 25px;
+    text-align: center;
+    display: inline-block;
+}
+
+.navbar a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 14px 25px;
+    text-align: center;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    color: hotpink;
+    text-decoration: none;
+}
+
+.navbar li a:hover:not(.active) {
+    background-color: #111;
+}
+  
+
+.navbar li {
+    float: left;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(40, 42, 53);
+}
+
+.active  {
+    background-color: #04AA6D;
+  }
+
