@@ -1,8 +1,8 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 
     <head>
-        <title>Hello</title>
+        <title>Home</title>
         <link rel="stylesheet" href="assests/style.css">
     </head>
 
@@ -19,8 +19,11 @@
         </nav>
     </div>  
 
-    <h3>Hello</h3>
     <body>
-        Hello <?php echo $_GET["name"];?>
+        <h3>Enter your name below</h3>
+        <form action="Hello.php" method="get">
+            Name: <input type=text" name="name">
+            <input type="submit">
+        </form>
     </body>
 </html>

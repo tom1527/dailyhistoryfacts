@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <div class="navbar">
-        <a class="active" href="form.php">Form</a>
-        <a href="daily-fact.php">Daily Fact</a>
-        <a href="test.php">Test</a>
-    </div>  
 
     <head>
         <title>Form Test</title>
+        <link rel="stylesheet" href="assests/style.css">
     </head>
+
+    <div class="navbar">
+        <nav>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li><a class="active" href="form.php">Form</a></li>
+                <li><a href="daily-fact.php">Daily Fact</a></li>
+                <li><a href="test.php">Test</a></li>
+                <li><a href="insert-form.php">Insert Test</a></li>
+                <li><a href="archive.php">Archive</a></li>
+            </ul>    
+        </nav>
+    </div>  
+
+
     <h1>Simple form</h1>
     <body>
         <h3>Enter your name below</h3>

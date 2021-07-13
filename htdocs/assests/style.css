@@ -11,7 +11,7 @@ body {
 }
 
 header {
-    background-color: blue;
+    background-color: OrangeRed;
     padding: 1px 100px;
 }
 
@@ -22,7 +22,7 @@ footer {
 
 .navbar a:link{
     font: bold;
-    color: red;
+    color: blue;
     text-decoration: none;
     padding: 14px 25px;
     text-align: center;
@@ -52,14 +52,40 @@ footer {
 }
 
 .navbar ul {
+    position: relative;
+    top: 0;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: rgb(40, 42, 53);
+    width: 100%;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
 }
 
 .active  {
     background-color: #04AA6D;
   }
 
+.dailyFactInfo {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: gray(40, 42, 53);
+    margin: 10px;
+    margin-top: 80px;
+    width: 500px;
+    float: right;
+    padding: 7px;
+}
+
+.dailyFact {
+    border: 2px solid black;
+    overflow: auto;
+    padding: 5px;
+}
