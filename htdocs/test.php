@@ -13,6 +13,7 @@
                 <li><a href="daily-fact.php">Daily Fact</a></li>
                 <li><a class="active" href="test.php">Test</a></li>
                 <li><a href="insert-form.php">Insert Test</a></li>
+                <li><a href="about.php">About me</a></li>
             </ul>    
         </nav>
     </div>  
@@ -23,4 +24,5 @@
             <p>This is a test<p>
         </body>
     </div>
+
 </html>

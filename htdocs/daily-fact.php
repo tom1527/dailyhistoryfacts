@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<body>
 
     <head>
         <title>Fact of the Day</title>
@@ -19,19 +20,18 @@
                 <li><a href="test.php">Test</a></li>
                 <li><a href="insert-form.php">Insert Test</a></li>
                 <li><a href="archive.php">Archive</a></li>
+                <li><a href="about.php">About me</a></li>
             </ul>    
         </nav>
     </div> 
 
 
-    <body>
-    <section>
+    <section class="dailyFactInfo">
         <h1>An Interesting Historical Fact</h1>
-        <p class="dailyFactInfo">This page displays an interesting fact that occured on today's date sometime in the past. Although care has been taken to verify the information 
+        <p>This page displays an interesting fact that occured on today's date sometime in the past. Although care has been taken to verify the information 
             below, it should be noted that I am not an historian. Refreshing the page may display an alternate fact for today. <br> If you wish to see facts from other dates,
             feel free to visit the archive page. Please bare in mind that some dates may not have an associated fact yet.</p>
-        <h4>Today's date is <?php echo date("F jS"); ?></h4>
-        <h4>On this date in the past:</h4>
+        <h4>Today's date is: <?php echo date("F jS"); ?></h4>
     </section>
     
     <section class="dailyFact">
@@ -47,7 +47,9 @@
             // Rather than using a random number, this could later be modified to be based on user region/culture.
         ?>
 
-        <p>
+        <h1>On <?php echo date("F jS") ?> in the past...</h1>
+
+        <b>
             <?php 
                 if ($factInfo) {
                     echo $factInfo['fact'];
@@ -55,19 +57,23 @@
                     echo "Error: the entry for this date is most likely empty. This will be fixed as the website is updated.";
                 }
             ?>
-        </p>
+        </b>
 
         <p>
             <?php
                 if ($factInfo) {
-                    $link = $factInfo['link'];
-                    ?> Click <a href="<?php echo $link;?>" target="blank">here</a> to learn more about this event. <?php
+                    ?> Click <a href="<?php echo $factInfo['link'];?>" target="blank"></b>here</a> to learn more about this event. <?php
                 } else {
                     echo "Error: link not found.";
                 }
             ?>
         </p>
     </section>
-    </body>
 
+    <section>
+        <img src="<?php echo $factInfo['image'] ?>" alt="associated image">
+    </section>
+
+    <footer
+    </body>
 </html>
