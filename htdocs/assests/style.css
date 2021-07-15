@@ -14,14 +14,19 @@ body {
 
 header {
     background-image: linear-gradient(to left, black, silver);
-    background-color: OrangeRed;
     padding: 1px 20px;
 
 }
 
 footer {
    background-color: silver;
-   padding: 1px 20px;
+   padding: 20px 20px;
+   position: fixed;
+   width: 100%;
+   bottom: 0;
+   margin: 0;
+   align-items: center;
+   display: flex;
 }
 
 div {
@@ -44,16 +49,12 @@ section {
 }
 
 .navbar a:visited {
-    color: rgb(205, 205, 205);
-    text-decoration: none;
-    padding: 14px 25px;
-    text-align: center;
-    display: inline-block;
+    color: rgb(255, 255, 255);
+
 }
 
 .navbar a:hover {
-    color: hotpink;
-    text-decoration: none;
+    color: gray;
 }
 
 .navbar li a:hover:not(.active) {
@@ -66,7 +67,6 @@ section {
 }
 
 .navbar ul {
-    position: relative;
     top: 0;
     list-style-type: none;
     margin: 0;
@@ -108,4 +108,22 @@ section {
 
 .result {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.socialMedia {
+
+    width: 32px;
+    height: 32px;
+    padding-left: 50px;
+    padding-right: 10px;
+}
+
+.footerText {
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 2px;
+    font-weight: bolder;
+}
+
+.footerText .footerLink {
+    font-weight: 900;
 }

@@ -17,7 +17,7 @@
     <div class="navbar">
         <nav>
             <ul>
-                <li><a class="active" href="index.html">Index</a></li>
+                <li><a class="active" href="index.php">Index</a></li>
                 <li><a href="form.php">Form</a></li>
                 <li><a href="daily-fact.php">Daily Fact</a></li>
                 <li><a href="test.php">Test</a></li>
@@ -58,7 +58,7 @@
             </form>
             <br>
         </div>
-    </body>   
+   
 
     <br>
     <br>
@@ -108,7 +108,8 @@
     <br>
     <br>
     blah
-    <footer>
-        <h1>Admin contact: twbradley@hotmail.com</h1>
-    </footer>
+    <?php
+        require "footer.html";
+    ?>
+    </body>
 </html>

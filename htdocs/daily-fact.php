@@ -14,7 +14,7 @@
     <div class="navbar">
         <nav>
             <ul>
-                <li><a href="index.html">Index</a></li>
+                <li><a href="index.php">Index</a></li>
                 <li><a href="form.php">Form</a></li>
                 <li><a class="active" href="daily-fact.php">Daily Fact</a></li>
                 <li><a href="test.php">Test</a></li>
@@ -73,6 +73,11 @@
         <img src="<?php echo $factInfo['image'] ?>" alt="associated image">
     </section>
 
-    <footer
+
+
     </body>
+
+    <?php
+        require "footer.html";
+    ?>
 </html>
