@@ -1,7 +1,15 @@
-<!DOCTYPE HTML>
-<?php
-        echo '
-        "<div class="navbar">
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Archive</title>
+        <link rel="stylesheet" href="assests/style.css">
+    </head>
+
+    <header>
+    About me
+    </header>
+
+    <div class="navbar">
         <nav>
             <ul>
                 <li><a href="index.html">Index</a></li>
@@ -13,9 +21,6 @@
                 <li><a class="active" href="about.php">About me</a></li>
             </ul>    
         </nav>
-    </div>';
+    </div> 
 
-
-    /* While abstracting out the navbar with "include" reduces complexity on each page and allows for uniformed alterations,
-    it makes the "active" class in CSS redundant. As such, this requires more work before implementation. */
-?>
+</html>

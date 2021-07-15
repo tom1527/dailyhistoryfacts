@@ -38,9 +38,8 @@
         <?php
             require ("connect-to-database.php");
             global $dbc;
-            $currentDate = date("Y-m-d");
-            $currentDay = date("j");
-            $currentMonth = date("n");
+            $currentDay = date("d");
+            $currentMonth = date("m");
             $factResult = mysqli_query($dbc, "SELECT * FROM facts WHERE day = '$currentDay' && month = '$currentMonth' ORDER BY RAND();");
             $factInfo = mysqli_fetch_assoc($factResult);
 

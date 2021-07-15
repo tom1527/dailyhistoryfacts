@@ -15,6 +15,7 @@
                 <li><a href="test.php">Test</a></li>
                 <li><a href="insert-form.php">Insert Test</a></li>
                 <li><a href="archive.php">Archive</a></li>
+                <li><a class="active" href="about.php">About me</a></li>
             </ul>    
         </nav>
     </div>  
