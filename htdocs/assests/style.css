@@ -7,19 +7,19 @@ h1 {
 }
 
 body {
-    background-color: lightgray;
+    background-color: rgb(157, 208, 202);
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-image: linear-gradient(to left, black, silver);
+    background-color: rgb(27, 187, 181);
     padding: 1px 20px;
 
 }
 
 footer {
-   background-color: silver;
+   background-color: rgb(27, 187, 181);
    padding: 20px 20px;
    position: fixed;
    width: 100%;
@@ -41,7 +41,7 @@ section {
 
 .navbar a:link{
     font: bold;
-    color: rgb(255, 255, 255);
+    color: lightgray;
     text-decoration: none;
     padding: 14px 25px;
     text-align: center;
@@ -49,16 +49,16 @@ section {
 }
 
 .navbar a:visited {
-    color: rgb(255, 255, 255);
+    color: lightgray;
 
 }
 
 .navbar a:hover {
-    color: gray;
+    color: white;
 }
 
 .navbar li a:hover:not(.active) {
-    background-color: #111;
+    background-color: rgb(25, 135, 155);
 }
   
 
@@ -72,7 +72,7 @@ section {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: rgb(40, 42, 53);
+    background-color: rgb(64 156 156);
     width: 100%;
 }
 
@@ -84,7 +84,7 @@ section {
 }
 
 .active  {
-    background-color: #04AA6D;
+    background-color: rgb(27, 187, 181);
   }
 
 .dailyFactInfo {
