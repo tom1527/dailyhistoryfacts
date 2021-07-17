@@ -24,46 +24,69 @@
         </nav>
     </div>
 
-    <section>
+    <span class="formSpan">
         <form action="" method="GET">
             <label for="search">Browse prior facts:</label><br>
             <input type="text" name="search" placeholder="Search">
+            <label for="sortBy">Sort by:</label>
+            <select id="sortBy" name="sortBy">
+                <option value="---" selected>---</option>
+                <option value="dateASC">Date Ascending</option>
+                <option value="dateDES">Date Descending</option>              
+            </select>
             <input type="submit" value="Search">
         </form>
-    </section>
+    </span>
 
-    <section>
+    <div>
         <?php 
-            require ("connect-to-database.php");
-            global $dbc;
+        require ("connect-to-database.php");
+
+        $searchTerm = extractSearchFromGET();
+        if($searchTerm) {
+            $results = getResultsFromDatabase($dbc, $searchTerm);
+            $numberOfResults = count($results);
+            echo "Search of $searchTerm returned $numberOfResults results.";
+            displayResults($results);
+        } else {
+            echo "Please enter a search term";
+        }
+
+        function extractSearchFromGET(): ?string {
             if (isset($_GET['search'])) {
-                $search = $_GET['search'];
-                $query = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$search%'");
-                $noResults = mysqli_num_rows($query);
-                if($search)  {
-                    echo "Search returned $noResults results.";
-                    while($row = mysqli_fetch_assoc($query)) {      
-                        ?>
-                        <h4  class="result"><?php echo $row['day'], "/", $row['month']; ?></h4>
-                        <p class="result"><?php echo $row['fact']; ?> </p>
-                        <?php
-                            if($row['link']) {
-                                ?><p>Click <a href="<?php echo $row['link'];?>" target="blank"></b>here</a> to learn more about this event.</p><?php
-                            }
-                            if($row['image']) {
-                                ?><img src="<?php echo $row['image'] ?>" alt="associated image" style="width:200px;height:200px"><?php
-                            }
-                    } 
-                    mysqli_free_result($query);
-                } else {
-                    echo "Error: please enter a search term.";
-                }
+                return $_GET['search'];
+            } else {
+                return null;
             }
-        ?>
-    </section>
+        }
+
+        function getResultsFromDatabase($dbc, $searchTerm): array {            
+            $mysqliResult = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
+            $results = array();
+            while($row = mysqli_fetch_assoc($mysqliResult)) {  
+                $results[] = $row;
+            } 
+            mysqli_free_result($mysqliResult);
+            return $results;
+        }
+
+        function displayResults(array $results): void {
+            foreach ($results as $result) {
+                echo "<h4 class='result'>$result[day]/$result[month]</h4>";
+                echo "<p class='result'>$result[fact]</p>";
+                if($result['link']) {
+                    echo "<p>Click <a href='$result[link]' target='blank'>here</a> to learn more about this event.</p>";
+                }
+                if($result['image']) {
+                    echo "<img src='$result[image]' alt='associated image' style='width:200px;height:200px'>";
+                }
+            }   
+        }
+
+    ?>
+    </div>
 
     <?php require 'footer.html'; ?>
-
 
 </body>
 </html>

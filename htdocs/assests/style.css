@@ -84,7 +84,7 @@ section {
 }
 
 .active  {
-    background-color: rgb(27, 187, 181);
+    background-color:  rgb(27, 187, 181);
   }
 
 .dailyFactInfo {
@@ -126,4 +126,10 @@ section {
 
 .footerText .footerLink {
     font-weight: 900;
+}
+
+.formSpan {
+    display: inline-block;
+    margin: 25px;
+    margin-bottom: 10px;
 }
