@@ -128,8 +128,48 @@ section {
     font-weight: 900;
 }
 
-.formSpan {
+  
+.pagination {
+    margin-bottom: 50px;
+}
+
+.archiveResults {
+    margin-bottom: 100px;
+    overflow: hidden;
+}
+
+.disabled li {
+    pointer-events: none;
+}
+
+.archiveForm {
     display: inline-block;
-    margin: 25px;
-    margin-bottom: 10px;
+    margin-bottom: -50px;
+}
+
+.searchBar {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.searchBarTitle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.selectBar {
+    padding: 12px 20px;
+    margin: 8px 0;
+
+}
+
+.selectBarTitle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.submit {
+    padding: 12px 50px;
+    margin: 8px 0;
 }

@@ -26,42 +26,83 @@
 
     <span class="formSpan">
         <form action="" method="GET">
-            <label for="search">Browse prior facts:</label><br>
-            <input type="text" name="search" placeholder="Search">
-            <label for="sortBy">Sort by:</label>
-            <select id="sortBy" name="sortBy">
-                <option value="---" selected>---</option>
-                <option value="dateASC">Date Ascending</option>
-                <option value="dateDES">Date Descending</option>              
-            </select>
-            <input type="submit" value="Search">
+            <div class="archiveForm">
+                <label class="searchBarTitle" for="search">Browse prior facts:</label><br>
+                <input class="searchBar" type="text" name="search" placeholder="Search" value="<?php echo (isset($_GET['search']) ? $_GET['search'] : '') ?>">
+                
+            </div>
+            <div class="archiveForm">
+                <label class= "selectBarTitle for="sortBy">Sort by:</label><br>
+                <select class="selectBar" id="sortBy" name="sortBy">
+                    <option value="---" selected>---</option>
+                    <option value="dateASC">Date Ascending</option>
+                    <option value="dateDES">Date Descending</option>              
+                </select>
+            </div>
+            <input type="hidden" name="pageNo" value="1"/>
+            <div >
+                <input class="submit" type="submit" value="Search">
+            </div>
         </form>
     </span>
 
-    <div>
+
+
+
+    <div class="archiveResults">
         <?php 
         require ("connect-to-database.php");
 
+
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {
-            $results = getResultsFromDatabase($dbc, $searchTerm);
-            $numberOfResults = count($results);
-            echo "Search of $searchTerm returned $numberOfResults results.";
+            $totalRows = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
+            $numberOfResults = mysqli_num_rows($totalRows);
+            $sortBy = $_GET['sortBy'];
+            $sqlOrderBy = extractSortByFromGET();
+            $pageNo = isset($_GET['pageNo']) ? (int) $_GET['pageNo'] : 1;
+            $pagination = limitResultsPerPage($pageNo);
+            $results = getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $pagination);
+            $totalPages = calculateTotalPages($numberOfResults);
+            echo "Search of \"$searchTerm\" returned $numberOfResults results.";
             displayResults($results);
         } else {
-            echo "Please enter a search term";
+            echo "Please enter a search term.";
         }
 
         function extractSearchFromGET(): ?string {
             if (isset($_GET['search'])) {
-                return $_GET['search'];
+                return htmlspecialchars($_GET['search']);
             } else {
                 return null;
             }
         }
 
-        function getResultsFromDatabase($dbc, $searchTerm): array {            
-            $mysqliResult = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
+        function extractSortByFromGET(): ?string {
+            if ($_GET['sortBy'] == "dateASC") {
+                return "ORDER BY `day` ASC, `month` ASC";
+            } elseif ($_GET['sortBy'] == "dateDES") {
+                return "ORDER BY `day` DESC, `month` DESC";
+            } else {
+                return "";
+            }
+        } 
+
+        function limitResultsPerPage($pageNo) {
+            $limit = 10;
+            $offset = ($pageNo - 1) * $limit;
+            return "LIMIT $limit OFFSET $offset";
+            //needs reworking to seperate sql from php
+        }
+
+        function calculateTotalPages($numberOfResults) {
+            $totalPages = ceil($numberOfResults / 10);
+            return $totalPages;
+        }
+
+
+        function getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $pagination): array {            
+            $mysqliResult = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%' $sqlOrderBy $pagination");
             $results = array();
             while($row = mysqli_fetch_assoc($mysqliResult)) {  
                 $results[] = $row;
@@ -83,8 +124,27 @@
             }   
         }
 
-    ?>
+
+
+
+        
+        ?>
+
+    <ul class="pagination">
+        <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1" ?>">First</a></li>
+        <li class="<?php if($pageNo <= 1){ echo 'disabled'; } ?>">
+            <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1); } ?>">Prev</a>
+        </li>
+        <li class="<?php if($pageNo >= $totalPages){ echo 'disabled'; } ?>">
+            <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1); } ?>">Next</a>
+        </li>
+        <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages; "?>">Last</a></li>
+    </ul>
+
+
+    
     </div>
+
 
     <?php require 'footer.html'; ?>
 
