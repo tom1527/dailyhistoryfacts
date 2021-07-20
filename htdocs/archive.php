@@ -40,7 +40,16 @@
                 </select>
             </div>
             <input type="hidden" name="pageNo" value="1"/>
-            <div >
+            <div class="archiveForm">
+            <label class= "selectBarTitle for="limitBy">Limit results per page:</label><br>
+                <select class="selectBar" id="limitBy" name="limitBy"">
+                    <option value= 5 <?php if($_GET['limitBy'] == 5) {echo 'selected="true"';}; ?>>5</option>
+                    <option value= 10 <?php if($_GET['limitBy'] == 10) {echo 'selected="true"';}; ?>>10</option>
+                    <option value= 15 <?php if($_GET['limitBy'] == 15) {echo 'selected="true"';}; ?>>15</option>              
+                    <option value= 20 <?php if($_GET['limitBy'] == 20) {echo 'selected="true"';}; ?>>20</option> 
+                </select>
+            </div>
+            <div>
                 <input class="submit" type="submit" value="Search">
             </div>
         </form>
@@ -53,7 +62,6 @@
         <?php 
         require ("connect-to-database.php");
 
-
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {
             $totalRows = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
@@ -61,7 +69,8 @@
             $sortBy = $_GET['sortBy'];
             $sqlOrderBy = extractSortByFromGET();
             $pageNo = isset($_GET['pageNo']) ? (int) $_GET['pageNo'] : 1;
-            $pagination = limitResultsPerPage($pageNo);
+            $limitResults = isset($_GET['limitBy']) ? (int) $_GET['limitBy'] : 5;
+            $pagination = limitResultsPerPage($pageNo, $limitResults);
             $results = getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $pagination);
             $totalPages = calculateTotalPages($numberOfResults);
             echo "Search of \"$searchTerm\" returned $numberOfResults results.";
@@ -88,10 +97,9 @@
             }
         } 
 
-        function limitResultsPerPage($pageNo) {
-            $limit = 10;
-            $offset = ($pageNo - 1) * $limit;
-            return "LIMIT $limit OFFSET $offset";
+        function limitResultsPerPage($pageNo, $limitResults) {
+            $offset = ($pageNo - 1) * $limitResults;
+            return "LIMIT $limitResults OFFSET $offset";
             //needs reworking to seperate sql from php
         }
 
@@ -112,8 +120,10 @@
         }
 
         function displayResults(array $results): void {
+            $i = 1;
             foreach ($results as $result) {
-                echo "<div class='archiveResults'><h4 class='result'>$result[day]/$result[month]</h4>";
+                echo "<div class='archiveResults'>Result: $i";
+                echo "<h4 class='result'>$result[day]/$result[month]</h4>";
                 echo "<p class='result'>$result[fact]</p>";
                 if($result['link']) {
                     echo "<p>Click <a href='$result[link]' target='blank'>here</a> to learn more about this event.</p>";
@@ -122,6 +132,7 @@
                     echo "<img src='$result[image]' alt='associated image' style='width:200px;height:200px'>";
                 }
                 echo "</div>";
+                $i++;
             }   
         }
 
