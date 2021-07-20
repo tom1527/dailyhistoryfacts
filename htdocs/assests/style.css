@@ -63,7 +63,7 @@ section {
   
 
 .navbar li {
-    float: left;
+    display: inline-block;
 }
 
 .navbar ul {
@@ -72,7 +72,7 @@ section {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: rgb(64 156 156);
+    background-color: rgb(64, 156, 156);
     width: 100%;
 }
 
@@ -130,16 +130,60 @@ section {
 
   
 .pagination {
-    margin-bottom: 50px;
+    margin-bottom: 100px;
+    text-align: center;
+    margin-left: 700px;
+    margin-right: 700px;
+}
+
+.pagination li {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.pagination ul {
+    top: 0;
+    list-style-type: none;
+    margin: 2px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: rgb(64, 156, 156);
+    width: 100%;
+    border: 1px solid black;
+}
+
+.pagination a:link{
+    font: bold;
+    color: lightgray;
+    text-decoration: none;
+    padding: 14px 25px;
+    text-align: center;
+    display: inline-block;
+}
+
+.pagination a:hover {
+    color: white;
+}
+
+.pagination li a:hover:not(.active) {
+    background-color: rgb(25, 135, 155);
+}
+
+.pagination a:visited {
+    color: lightgray;
+
 }
 
 .archiveResults {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     overflow: hidden;
+    border-top: 2px solid black;
 }
 
 .disabled li {
     pointer-events: none;
+    color: blue;
 }
 
 .archiveForm {
@@ -151,6 +195,7 @@ section {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
+    background-color:rgb(203, 222, 222);
 }
 
 .searchBarTitle {
@@ -161,7 +206,7 @@ section {
 .selectBar {
     padding: 12px 20px;
     margin: 8px 0;
-
+    background-color:rgb(203, 222, 222);
 }
 
 .selectBarTitle {

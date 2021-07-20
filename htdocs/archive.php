@@ -33,10 +33,10 @@
             </div>
             <div class="archiveForm">
                 <label class= "selectBarTitle for="sortBy">Sort by:</label><br>
-                <select class="selectBar" id="sortBy" name="sortBy">
-                    <option value="---" selected>---</option>
-                    <option value="dateASC">Date Ascending</option>
-                    <option value="dateDES">Date Descending</option>              
+                <select class="selectBar" id="sortBy" name="sortBy"">
+                    <option value="---" <?php if(isset($_GET['sortBy']) == '---') {echo 'selected="true"';}; ?>>---</option>
+                    <option value="dateASC" <?php if(isset($_GET['sortBy']) == 'dateASC') {echo 'selected="true"';}; ?>>Date Ascending</option>
+                    <option value="dateDES" <?php if(isset($_GET['sortBy']) == 'dateDES') {echo 'selected="true"';}; ?>>Date Descending</option>              
                 </select>
             </div>
             <input type="hidden" name="pageNo" value="1"/>
@@ -49,7 +49,7 @@
 
 
 
-    <div class="archiveResults">
+    <div>
         <?php 
         require ("connect-to-database.php");
 
@@ -113,7 +113,7 @@
 
         function displayResults(array $results): void {
             foreach ($results as $result) {
-                echo "<h4 class='result'>$result[day]/$result[month]</h4>";
+                echo "<div class='archiveResults'><h4 class='result'>$result[day]/$result[month]</h4>";
                 echo "<p class='result'>$result[fact]</p>";
                 if($result['link']) {
                     echo "<p>Click <a href='$result[link]' target='blank'>here</a> to learn more about this event.</p>";
@@ -121,6 +121,7 @@
                 if($result['image']) {
                     echo "<img src='$result[image]' alt='associated image' style='width:200px;height:200px'>";
                 }
+                echo "</div>";
             }   
         }
 
@@ -129,21 +130,26 @@
 
         
         ?>
-
-    <ul class="pagination">
-        <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1" ?>">First</a></li>
-        <li class="<?php if($pageNo <= 1){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1); } ?>">Prev</a>
-        </li>
-        <li class="<?php if($pageNo >= $totalPages){ echo 'disabled'; } ?>">
-            <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1); } ?>">Next</a>
-        </li>
-        <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages; "?>">Last</a></li>
-    </ul>
-
-
-    
     </div>
+
+    <?php 
+    if($searchTerm) {
+        ?>
+        <div  class="pagination">
+            <ul>
+                <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1" ?>">First</a></li>
+                <li class="<?php if($pageNo <= 1){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1); } ?>">Prev</a>
+                </li>
+                <li class="<?php if($pageNo >= $totalPages){ echo 'disabled'; } ?>">
+                    <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1); } ?>">Next</a>
+                </li>
+                <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages; "?>">Last</a></li>
+            </ul>
+        </div>
+        <?php
+    }
+    ?>
 
 
     <?php require 'footer.html'; ?>
