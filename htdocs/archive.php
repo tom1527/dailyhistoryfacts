@@ -32,21 +32,21 @@
                 
             </div>
             <div class="archiveForm">
-                <label class= "selectBarTitle for="sortBy">Sort by:</label><br>
-                <select class="selectBar" id="sortBy" name="sortBy"">
-                    <option value="---" <?php if(isset($_GET['sortBy']) == '---') {echo 'selected="true"';}; ?>>---</option>
-                    <option value="dateASC" <?php if(isset($_GET['sortBy']) == 'dateASC') {echo 'selected="true"';}; ?>>Date Ascending</option>
-                    <option value="dateDES" <?php if(isset($_GET['sortBy']) == 'dateDES') {echo 'selected="true"';}; ?>>Date Descending</option>              
+                <label class= "selectBarTitle" for='sortBy'>Sort by:</label><br>
+                <select class="selectBar" id="sortBy" name="sortBy">
+                    <option value="---" <?php echo sortBySelected("---") ?>>---</option>
+                    <option value="dateASC" <?php echo sortBySelected("dateASC") ?>>Date Ascending</option>
+                    <option value="dateDES" <?php echo sortBySelected("dateDES") ?>>Date Descending</option>              
                 </select>
             </div>
             <input type="hidden" name="pageNo" value="1"/>
             <div class="archiveForm">
-            <label class= "selectBarTitle for="limitBy">Limit results per page:</label><br>
-                <select class="selectBar" id="limitBy" name="limitBy"">
-                    <option value= 5 <?php if($_GET['limitBy'] == 5) {echo 'selected="true"';}; ?>>5</option>
-                    <option value= 10 <?php if($_GET['limitBy'] == 10) {echo 'selected="true"';}; ?>>10</option>
-                    <option value= 15 <?php if($_GET['limitBy'] == 15) {echo 'selected="true"';}; ?>>15</option>              
-                    <option value= 20 <?php if($_GET['limitBy'] == 20) {echo 'selected="true"';}; ?>>20</option> 
+            <label class= "selectBarTitle" for='limitBy'>Limit results per page:</label><br>
+                <select class="selectBar" id="limitBy" name="limitBy">
+                    <option value= "5" <?php echo limitBySelected(5); ?>>5</option>
+                    <option value= "10" <?php echo limitBySelected(10); ?>>10</option>
+                    <option value= "15" <?php echo limitBySelected(15); ?>>15</option>              
+                    <option value= "20" <?php echo limitBySelected(20); ?>>20</option> 
                 </select>
             </div>
             <div>
@@ -54,6 +54,8 @@
             </div>
         </form>
     </span>
+        <!-- this form could use a function to reduce repitition -->
+
 
 
 
@@ -61,7 +63,6 @@
     <div>
         <?php 
         require ("connect-to-database.php");
-
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {
             $totalRows = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
@@ -97,10 +98,28 @@
             }
         } 
 
+        function sortBySelected($value) {
+            if(isset($_GET['sortBy'])) {
+                $sortBy = $_GET['sortBy'];
+                if($value == $sortBy){
+                    return "selected";
+                }
+            }
+        }
+
         function limitResultsPerPage($pageNo, $limitResults) {
             $offset = ($pageNo - 1) * $limitResults;
             return "LIMIT $limitResults OFFSET $offset";
             //needs reworking to seperate sql from php
+        }
+
+        function limitBySelected($value) {
+            if(isset($_GET['limitBy'])) {
+                $limitBy = (int) $_GET['limitBy'];
+                if($value == $limitBy){
+                    return "selected";
+                }
+            }
         }
 
         function calculateTotalPages($numberOfResults) {
