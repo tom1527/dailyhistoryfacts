@@ -54,7 +54,7 @@
             </div>
         </form>
     </span>
-        <!-- this form could use a function to reduce repitition -->
+
 
 
 
@@ -71,8 +71,8 @@
             $sqlOrderBy = extractSortByFromGET();
             $pageNo = isset($_GET['pageNo']) ? (int) $_GET['pageNo'] : 1;
             $limitResults = isset($_GET['limitBy']) ? (int) $_GET['limitBy'] : 5;
-            $pagination = limitResultsPerPage($pageNo, $limitResults);
-            $results = getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $pagination);
+            $sqlPagination = limitResultsPerPage($pageNo, $limitResults);
+            $results = getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $sqlPagination);
             $totalPages = calculateTotalPages($numberOfResults);
             echo "Search of \"$searchTerm\" returned $numberOfResults results.";
             displayResults($results);
@@ -89,13 +89,14 @@
         }
 
         function extractSortByFromGET(): ?string {
+            $sqlOrderBy = "--";
             if ($_GET['sortBy'] == "dateASC") {
-                return "ORDER BY `day` ASC, `month` ASC";
-            } elseif ($_GET['sortBy'] == "dateDES") {
-                return "ORDER BY `day` DESC, `month` DESC";
-            } else {
-                return "";
+                $sqlOrderBy = "ORDER BY `day` ASC, `month` ASC";
+            } 
+            if ($_GET['sortBy'] == "dateDES") {
+                $sqlOrderBy = "ORDER BY `day` DESC, `month` DESC";
             }
+            return $sqlOrderBy;
         } 
 
         function sortBySelected($value) {
@@ -107,10 +108,10 @@
             }
         }
 
-        function limitResultsPerPage($pageNo, $limitResults) {
+        function limitResultsPerPage($pageNo, $limitResults)  {
             $offset = ($pageNo - 1) * $limitResults;
-            return "LIMIT $limitResults OFFSET $offset";
-            //needs reworking to seperate sql from php
+            $sqlPagination = "LIMIT $limitResults OFFSET $offset";
+            return $sqlPagination;
         }
 
         function limitBySelected($value) {
@@ -128,8 +129,8 @@
         }
 
 
-        function getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $pagination): array {            
-            $mysqliResult = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%' $sqlOrderBy $pagination");
+        function getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $sqlPagination): array {            
+            $mysqliResult = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%' $sqlOrderBy $sqlPagination");
             $results = array();
             while($row = mysqli_fetch_assoc($mysqliResult)) {  
                 $results[] = $row;
@@ -167,14 +168,14 @@
         ?>
         <div  class="pagination">
             <ul>
-                <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1" ?>">First</a></li>
+                <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1&limitBy=$limitResults" ?>">First</a></li>
                 <li class="<?php if($pageNo <= 1){ echo 'disabled'; } ?>">
-                    <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1); } ?>">Prev</a>
+                    <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1)."&limitBy=$limitResults"; } ?>">Prev</a>
                 </li>
                 <li class="<?php if($pageNo >= $totalPages){ echo 'disabled'; } ?>">
-                    <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1); } ?>">Next</a>
+                    <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1)."&limitBy=$limitResults"; } ?>">Next</a>
                 </li>
-                <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages; "?>">Last</a></li>
+                <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages&limitBy=$limitResults; "?>">Last</a></li>
             </ul>
         </div>
         <?php
