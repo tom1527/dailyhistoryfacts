@@ -58,7 +58,9 @@
     </section>
 
     <section>
-        <img src="<?php echo $factInfo['image'] ?>" alt="associated image">
+        <a href="<?php echo $factInfo['image']?>" target="blank">
+            <img class="dailyFactImage" src="<?php echo $factInfo['image'] ?>" alt="associated image">
+        </a>
     </section>
 
 

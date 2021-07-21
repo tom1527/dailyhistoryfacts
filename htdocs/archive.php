@@ -61,7 +61,7 @@
             $limitResults = isset($_GET['limitBy']) ? (int) $_GET['limitBy'] : 5;
             $sqlPagination = limitResultsPerPage($pageNo, $limitResults);
             $results = getResultsFromDatabase($dbc, $searchTerm, $sqlOrderBy, $sqlPagination);
-            $totalPages = calculateTotalPages($numberOfResults);
+            $totalPages = calculateTotalPages($numberOfResults, $limitResults);
             echo "Search of \"$searchTerm\" returned $numberOfResults results.";
             displayResults($results);
         } else {
@@ -77,7 +77,7 @@
         }
 
         function extractSortByFromGET(): ?string {
-            $sqlOrderBy = "--";
+            $sqlOrderBy = "";
             if ($_GET['sortBy'] == "dateASC") {
                 $sqlOrderBy = "ORDER BY `day` ASC, `month` ASC";
             } 
@@ -111,8 +111,8 @@
             }
         }
 
-        function calculateTotalPages($numberOfResults) {
-            $totalPages = ceil($numberOfResults / 10);
+        function calculateTotalPages($numberOfResults, $limitResults) {
+            $totalPages = ceil($numberOfResults / $limitResults);
             return $totalPages;
         }
 
