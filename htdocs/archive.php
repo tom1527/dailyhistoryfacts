@@ -10,19 +10,7 @@
     <h1>Archive</h1>
     </header>
 
-    <div class="navbar">
-        <nav>
-            <ul>
-                <li><a href="index.php">Index</a></li>
-                <li><a href="form.php">Form</a></li>
-                <li><a href="daily-fact.php">Daily Fact</a></li>
-                <li><a href="test.php">Test</a></li>
-                <li><a href="insert-form.php">Insert Test</a></li>
-                <li><a class="active" href="archive.php">Archive</a></li>
-                <li><a href="about.php">About me</a></li>
-            </ul>    
-        </nav>
-    </div>
+    <?php require 'navBar.php'; ?>
 
     <span class="formSpan">
         <form action="" method="GET">
@@ -149,7 +137,10 @@
                     echo "<p>Click <a href='$result[link]' target='blank'>here</a> to learn more about this event.</p>";
                 }
                 if($result['image']) {
-                    echo "<img src='$result[image]' alt='associated image' style='width:200px;height:200px'>";
+                    echo "
+                    <a href='$result[image]' target='blank'>
+                        <img src='$result[image]' alt='associated image' style='width:200px;height:200px'>
+                    </a>";
                 }
                 echo "</div>";
                 $i++;
