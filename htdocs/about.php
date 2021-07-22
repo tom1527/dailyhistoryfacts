@@ -9,8 +9,8 @@
         <h1>About</h1>
     </header>
 
-    <?php require 'navBar.php'; ?>
+    <?php require 'includes/navBar.inc.php'; ?>
 
-    <?php require 'footer.html'; ?>
+    <?php require 'includes/footer.inc.html'; ?>
 
 </html>

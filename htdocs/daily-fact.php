@@ -11,7 +11,7 @@
         <h1>Fact of the day</h1>
     </header>
 
-    <?php require 'navBar.php'; ?>
+    <?php require 'includes/navBar.inc.php'; ?>
 
 
     <section class="dailyFactInfo">
@@ -24,7 +24,7 @@
     
     <section class="dailyFact">
         <?php
-            require ("connect-to-database.php");
+            require ("includes/connect-to-database.inc.php");
             global $dbc;
             $currentDay = date("d");
             $currentMonth = date("m");
@@ -57,16 +57,48 @@
         </p>
     </section>
 
-    <section>
+    <div class="dailyFactImage">
         <a href="<?php echo $factInfo['image']?>" target="blank">
             <img class="dailyFactImage" src="<?php echo $factInfo['image'] ?>" alt="associated image">
         </a>
-    </section>
+    </div>
 
+    <div>
+        <form class="commentForm" action="" method="GET">
+            <div>
+                <label for="comment">Write a comment:</label><br>
+                <input type="text" name="comment" placeholder="Type here.">
+                <input type="submit" value="Submit">
+            </div>
 
+    </div>
+
+    <?php
+
+    function displayResults(array $results): void {
+            $i = 1;
+            foreach ($results as $result) {
+                echo "<div class='archiveResults'>Result: $i";
+                echo "<h4 class='result'>$result[day]/$result[month]</h4>";
+                echo "<p class='result'>$result[fact]</p>";
+                if($result['link']) {
+                    echo "<p>Click <a href='$result[link]' target='blank'>here</a> to learn more about this event.</p>";
+                }
+                if($result['image']) {
+                    echo "
+                    <a href='$result[image]' target='blank'>
+                        <img src='$result[image]' alt='associated image' style='width:200px;height:200px'>
+                    </a>";
+                }
+                echo "</div>";
+                $i++;
+            }   
+        }
+
+    ?>
 
     </body>
 
-    <?php require 'footer.html'; ?>
+    <?php require 'includes/footer.inc.html'; ?>
 
 </html>

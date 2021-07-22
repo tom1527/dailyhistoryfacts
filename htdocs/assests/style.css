@@ -193,7 +193,7 @@ section {
 
 .archiveForm {
     display: inline-block;
-    margin-bottom: -50px;
+    margin-bottom: -500px;
 }
 
 .searchBar {
@@ -222,4 +222,8 @@ section {
 .submit {
     padding: 12px 50px;
     margin: 8px 0;
+}
+
+.commentForm {
+    margin-bottom: 100px;
 }

@@ -10,7 +10,7 @@
     <h1>Archive</h1>
     </header>
 
-    <?php require 'navBar.php'; ?>
+    <?php require 'includes/navBar.inc.php'; ?>
 
     <span class="formSpan">
         <form action="" method="GET">
@@ -50,7 +50,7 @@
 
     <div>
         <?php 
-        require ("connect-to-database.php");
+        require ("includes/connect-to-database.inc.php");
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {
             $totalRows = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
@@ -174,7 +174,7 @@
     ?>
 
 
-    <?php require 'footer.html'; ?>
+    <?php require 'includes/footer.inc.html'; ?>
 
 </body>
 </html>

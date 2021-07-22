@@ -1,3 +1,7 @@
+<?php
+    include 'includes/autoloader.inc.php';
+?>
+
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -58,6 +62,14 @@
             </form>
             <br>
         </div>
+
+        <?php
+            $tom = new person("Tom", "blue", 22);
+            echo $tom->getName();
+            echo person :: $drinkingAge;
+            person :: setDrinkingAge(18);
+            echo person :: $drinkingAge
+        ?>
    
 
     <br>
