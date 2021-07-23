@@ -51,6 +51,7 @@
     <div>
         <?php 
         require ("includes/connect-to-database.inc.php");
+        $pdo = new DataBaseConn();
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {
             $totalRows = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
@@ -87,7 +88,7 @@
             return $sqlOrderBy;
         } 
 
-        function sortBySelected($value) {
+        function sortBySelected($value): ?string {
             if(isset($_GET['sortBy'])) {
                 $sortBy = $_GET['sortBy'];
                 if($value == $sortBy){
@@ -96,13 +97,13 @@
             }
         }
 
-        function limitResultsPerPage($pageNo, $limitResults)  {
+        function limitResultsPerPage($pageNo, $limitResults): ?string {
             $offset = ($pageNo - 1) * $limitResults;
             $sqlPagination = "LIMIT $limitResults OFFSET $offset";
             return $sqlPagination;
         }
 
-        function limitBySelected($value) {
+        function limitBySelected($value): ?string{
             if(isset($_GET['limitBy'])) {
                 $limitBy = (int) $_GET['limitBy'];
                 if($value == $limitBy){
@@ -111,7 +112,7 @@
             }
         }
 
-        function calculateTotalPages($numberOfResults, $limitResults) {
+        function calculateTotalPages($numberOfResults, $limitResults): float{
             $totalPages = ceil($numberOfResults / $limitResults);
             return $totalPages;
         }

@@ -1,5 +1,5 @@
 <?php
 
-interface facts {
+interface Facts {
     
 }
