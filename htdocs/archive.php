@@ -1,3 +1,4 @@
+<?php require 'includes/autoloader.inc.php'; ?>
 <!DOCTYPE html>
 <html>
     <body>
@@ -51,7 +52,6 @@
     <div>
         <?php 
         require ("includes/connect-to-database.inc.php");
-        $pdo = new DataBaseConn();
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {
             $totalRows = mysqli_query($dbc, "SELECT * FROM `facts` WHERE `fact` LIKE '%$searchTerm%'");
@@ -88,7 +88,7 @@
             return $sqlOrderBy;
         } 
 
-        function sortBySelected($value): ?string {
+        function sortBySelected($value) {
             if(isset($_GET['sortBy'])) {
                 $sortBy = $_GET['sortBy'];
                 if($value == $sortBy){
@@ -97,13 +97,13 @@
             }
         }
 
-        function limitResultsPerPage($pageNo, $limitResults): ?string {
+        function limitResultsPerPage($pageNo, $limitResults) {
             $offset = ($pageNo - 1) * $limitResults;
             $sqlPagination = "LIMIT $limitResults OFFSET $offset";
             return $sqlPagination;
         }
 
-        function limitBySelected($value): ?string{
+        function limitBySelected($value) {
             if(isset($_GET['limitBy'])) {
                 $limitBy = (int) $_GET['limitBy'];
                 if($value == $limitBy){
@@ -129,9 +129,9 @@
         }
 
         function displayResults(array $results): void {
-            $i = 1;
-            foreach ($results as $result) {
-                echo "<div class='archiveResults'>Result: $i";
+            foreach ($results as $i => $result) {
+                $resultNumber = $i + 1;
+                echo "<div class='archiveResults'>Result: $resultNumber";
                 echo "<h4 class='result'>$result[day]/$result[month]</h4>";
                 echo "<p class='result'>$result[fact]</p>";
                 if($result['link']) {
@@ -144,7 +144,6 @@
                     </a>";
                 }
                 echo "</div>";
-                $i++;
             }   
         }
 

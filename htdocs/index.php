@@ -1,5 +1,5 @@
 <?php
-    include 'includes/autoloader.inc.php';
+    require 'includes/autoloader.inc.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -70,7 +70,6 @@
             person :: setDrinkingAge(18);
             echo person :: $drinkingAge
         ?>
-   
 
     <br>
     <br>
