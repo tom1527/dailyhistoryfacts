@@ -1,9 +1,19 @@
 <?php
-class ResultsDisplayer extends DatabaseSearcher {
 
 
+class ResultsDisplayer {
+
+    private DatabaseSearcher $searcher;
+    
+
+    public function __construct($searcher) {
+        $this->searcher = $searcher;
+    }
+    
     public function displayResults(): void {
-        $results = $this->getSearchResults();
+        
+        $results = $this->searcher->getSearchResults();
+
         foreach ($results as $i => $result) {
             $resultNumber = $i + 1;
             echo "<div class='archiveResults'>Result: $resultNumber";

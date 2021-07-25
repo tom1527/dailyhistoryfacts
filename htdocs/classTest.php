@@ -49,7 +49,8 @@
   
     <?php
     if(isset($_GET['search'])){
-        $displayResults = new ResultsDisplayer($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
+        $getResults = new DatabaseSearcher($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
+        $displayResults = new ResultsDisplayer($getResults);
         $displayResults->displayResults();
     }
      ?>  
