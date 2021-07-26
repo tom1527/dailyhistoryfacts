@@ -1,4 +1,5 @@
-<?php require 'includes/autoloader.inc.php'; ?>
+<?php require_once '../vendor/autoload.php';?>
+
 <!DOCTYPE html>
 <html>
     <body>
@@ -8,7 +9,7 @@
     </head>
 
     <header>
-    <h1>Archive</h1>
+        <h1>Archive</h1>
     </header>
 
     <?php require 'includes/navBar.inc.php'; ?>
@@ -47,10 +48,9 @@
 
 
 
-
-
     <div>
         <?php 
+    
         require ("includes/connect-to-database.inc.php");
         $searchTerm = extractSearchFromGET();
         if($searchTerm) {

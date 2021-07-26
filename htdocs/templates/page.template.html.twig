@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<htmml>
+    <body>
+    <head>
+        <title>{{pageTitle}}</title>
+        <link rel="stylesheet" href="../assests/style.css">
+        <link>
+    </head> 
+
+    <header>
+        <h1>{{header}}</h1>
+    </header>
+
+
+
+
+    <div class="navbar">
+        <nav>
+            <ul>
+                <li><a class="{% if app.request.attributes.get('_route') == '_list' %}active{% endif %}" href="../daily-fact.php">Daily Fact</a></li>
+                <li><a class="{% if app.request.attributes.get('_route') == '_list' %}active{% endif %}" href="../archive.php">Archive</a></li>
+                <li><a class="{% if app.request.attributes.get('_route') == '_list' %}active{% endif %}" href="../about.php">About</a></li>
+                <li><a class="{% if craft.request.getPath() ==  entry.uri %}active{% endif %}" href="page.class.php">Test</a></li>
+            </ul>    
+        </nav>
+    </div>
+
+
+
+
+
+     
+
+    <footer>
+        <span class="footerText">
+            Admin contact: <a href="mailto:twbradley@hotmail.com">twbradley@hotmail.com</a>
+        </span>
+        <span style="display: inline-block;">
+            <a href="https://www.linkedin.com/in/thomas-bradley-13a08616a/" target="blank">
+                <img class="socialMedia" src="https://www.edigitalagency.com.au/wp-content/uploads/Linkedin-logo-icon-png.png" alt="Linkedin-logo-icon-png"/>
+            </a>
+        </span>
+        <span class="footerText footerLink">
+            <a href="https://www.linkedin.com/in/thomas-bradley-13a08616a/" target="blank">Thomas Bradley</a>
+        </span>
+    </footer>
+    </body>
+</htmml>

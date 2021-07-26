@@ -3,10 +3,7 @@
 <?php
 class DatabaseSearcher extends DataBaseConn {
 
-    public $searchTerm; 
-    public $sortBy; 
-    public $pageNo;
-    public $limitBy;
+    public array $searchTerms; 
 
     public function __construct(array $searchTerms) {
         $this->searchTerms = $searchTerms;
@@ -14,9 +11,28 @@ class DatabaseSearcher extends DataBaseConn {
 
     public function getSearchResults(): array {
         $searchTerms = $this->searchTerms;
-        $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', ?, '%')";
+        $this->sortBy = $searchTerms['sortBy'];
+        $this->limit = $searchTerms['limitBy'];
+        $this->offset = $searchTerms['offset'];
+ 
+        switch($this->sortBy){
+            case "dateASC":
+                $this->sortBy = "`day` ASC, `month` ASC";
+                break;
+            case "dateDES":
+                $this->sortBy = "`day` DESC, `month` DESC";
+                break;
+            case "---":
+                $this->sortBy = "NULL";
+                break;
+        }
+
+        $limitBy = "LIMIT $searchTerms[limitBy] OFFSET $searchTerms[offset]";
+
+        $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') ORDER BY $this->sortBy Limit $this->limit OFFSET $this->offset";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$searchTerms['0']]);
+        $stmt->bindValue(':searchTerm', $searchTerms['searchTerm']);
+        $stmt->execute();
 
         $results = $stmt->fetchAll();
         return $results;        
@@ -26,7 +42,7 @@ class DatabaseSearcher extends DataBaseConn {
         $searchTerms = $this->searchTerms;
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', ?, '%')";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$searchTerms['0']]);
+        $stmt->execute([$searchTerms['searchTerm']]);
         
         $results = $stmt->fetchAll();
         $totalNumberOfSearchResults = count($results);

@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "classmap": [
+            "htdocs/classes/"
+        ]
+    },
+
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
+
+

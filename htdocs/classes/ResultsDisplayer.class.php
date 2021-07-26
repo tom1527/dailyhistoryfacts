@@ -20,7 +20,7 @@ class ResultsDisplayer {
         $totalResults = $this->totalResults;
         
 
-        echo "<div>Search of \"$searchTerms[0]\" returned $totalResults.</div>";
+        echo "<div>Search of \"$searchTerms[searchTerm]\" returned $totalResults.</div>";
         foreach ($results as $i => $result) {
             $resultNumber = $i + 1;
             echo "<div class='archiveResults'>Result: $resultNumber";
