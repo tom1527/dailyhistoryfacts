@@ -49,8 +49,12 @@
   
     <?php
     if(isset($_GET['search'])){
-        $getResults = new DatabaseSearcher($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
-        $displayResults = new ResultsDisplayer($getResults);
-        $displayResults->displayResults();
+        $searchTermExtractor = new SearchTermExtractor($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
+        $searchTerms = $searchTermExtractor->extractSearchTerms();
+        $dataBaseSearcher = new DatabaseSearcher($searchTerms);
+        $results = $dataBaseSearcher->getSearchResults();
+        $totalResults = $dataBaseSearcher->countSearchResults();
+        $displayResults = new ResultsDisplayer($searchTerms, $results, $totalResults);
+        $displayResults->resultDisplayer();
     }
      ?>  

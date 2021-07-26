@@ -3,23 +3,24 @@
 
 class ResultsDisplayer {
 
-    private DatabaseSearcher $searcher;
-    private SearchTermExtractor $extractor;
-    
+    private array $searchTerms;
+    private array $results;
+    private int $totalResults;
 
-    public function __construct($searcher, $extractor) {
-        $this->searcher = $searcher;
-        $this->extractor = $extractor;
+    public function __construct(array $searchTerms, array $results, int $totalResults) {
+        $this->searchTerms = $searchTerms;
+        $this->results = $results;
+        $this->totalResults = $totalResults;
+        
     }
     
-    public function displayResults(): void {
-        
-        $results = $this->searcher->getSearchResults();
-        $totalResults = $this->searcher->countSearchResults();
-        $searchTerm = $this->extractor->extractSearchTerms();
+    public function resultDisplayer(): void {
+        $searchTerms = $this->searchTerms;
+        $results = $this->results;
+        $totalResults = $this->totalResults;
         
 
-        echo "<div>Search of \"$searchTerm[0]\" returned $totalResults.</div>";
+        echo "<div>Search of \"$searchTerms[0]\" returned $totalResults.</div>";
         foreach ($results as $i => $result) {
             $resultNumber = $i + 1;
             echo "<div class='archiveResults'>Result: $resultNumber";
