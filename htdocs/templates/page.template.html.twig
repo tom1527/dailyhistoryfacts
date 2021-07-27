@@ -25,10 +25,62 @@
         </nav>
     </div>
 
+    {% if craft.request.getPath() ==  entry.uri  %}
+    <span class="formSpan">
+    <form action="" method="GET">
+        <div class="archiveForm">
+            <label class="searchBarTitle" for="search">Browse prior facts:</label><br>
+            <input class="searchBar" type="text" name="search" placeholder="Search" value="{{searchBarValue | default('') }}">
+            
+        </div>
+        <div class="archiveForm">
+            <label class= "selectBarTitle" for='sortBy'>Sort by:</label><br>
+            <select class="selectBar" id="sortBy" name="sortBy">
+                {% for options in sortByValues %}
+                    {% set selected = '' %}
+                    {% if options.option == sortBy %}
+                    {% set selected = 'selected' %}
+                    {% endif %}
+                    <option value="{{options.option}}" {{ selected }}>{{options.label}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="hidden" name="pageNo" value="1"/>
+        <div class="archiveForm">
+        <label class= "selectBarTitle" for='limitBy'>Limit results per page:</label><br>
+            <select class="selectBar" id="limitBy" name="limitBy">
+                   {% for options in limitByValues %}
+                    {% set selected = '' %}
+                    {% if options.option == limitBy %}
+                    {% set selected = 'selected' %}
+                    {% endif %}
+                    <option value="{{options.option}}" {{ selected }}>{{options.option}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <input class="submit" type="submit" value="Search">
+        </div>
+    </form>
+    </span>
+
+    {% endif %}
 
 
+    
 
-
+    <div  class="pagination">
+        <ul>
+            <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1&limitBy=$limitResults" ?>">First</a></li>
+            <li class="<?php if($pageNo <= 1){ echo 'disabled'; } ?>">
+                <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1)."&limitBy=$limitResults"; } ?>">Prev</a>
+            </li>
+            <li class="<?php if($pageNo >= $totalPages){ echo 'disabled'; } ?>">
+                <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1)."&limitBy=$limitResults"; } ?>">Next</a>
+            </li>
+            <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages&limitBy=$limitResults; "?>">Last</a></li>
+        </ul>
+    </div>
      
 
     <footer>
