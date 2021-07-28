@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit cacheResultFile="tests/.phpunit.result.cache">
+    <logging>
+        <junit outputFile="tests/test_output.xml"/>
+    </logging>
+</phpunit>

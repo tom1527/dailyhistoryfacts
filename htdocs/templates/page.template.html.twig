@@ -17,9 +17,9 @@
     <div class="navbar">
         <nav>
             <ul>
-                <li><a class="{% if app.request.attributes.get('_route') == '_list' %}active{% endif %}" href="../daily-fact.php">Daily Fact</a></li>
-                <li><a class="{% if app.request.attributes.get('_route') == '_list' %}active{% endif %}" href="../archive.php">Archive</a></li>
-                <li><a class="{% if app.request.attributes.get('_route') == '_list' %}active{% endif %}" href="../about.php">About</a></li>
+                <li><a class="{% if craft.request.getPath() ==  entry.uri %}{% endif %}" href="../daily-fact.php">Daily Fact</a></li>
+                <li><a class="{% if craft.request.getPath() ==  entry.uri %}{% endif %}" href="../archive.php">Archive</a></li>
+                <li><a class="{% if craft.request.getPath() ==  entry.uri %}{% endif %}" href="../about.php">About</a></li>
                 <li><a class="{% if craft.request.getPath() ==  entry.uri %}active{% endif %}" href="page.class.php">Test</a></li>
             </ul>    
         </nav>
@@ -39,7 +39,7 @@
                 {% for options in sortByValues %}
                     {% set selected = '' %}
                     {% if options.option == sortBy %}
-                    {% set selected = 'selected' %}
+                        {% set selected = 'selected' %}
                     {% endif %}
                     <option value="{{options.option}}" {{ selected }}>{{options.label}}</option>
                 {% endfor %}
@@ -49,10 +49,10 @@
         <div class="archiveForm">
         <label class= "selectBarTitle" for='limitBy'>Limit results per page:</label><br>
             <select class="selectBar" id="limitBy" name="limitBy">
-                   {% for options in limitByValues %}
+                {% for options in limitByValues %}
                     {% set selected = '' %}
                     {% if options.option == limitBy %}
-                    {% set selected = 'selected' %}
+                        {% set selected = 'selected' %}
                     {% endif %}
                     <option value="{{options.option}}" {{ selected }}>{{options.option}}</option>
                 {% endfor %}
@@ -63,6 +63,29 @@
         </div>
     </form>
     </span>
+
+    {% if searchTerms| default(null)%}
+    <div>
+        Search of "{{searchTerms.searchTerm}}" returned {{totalResults}} results.
+    </div>
+    {% endif %}
+
+    <div>
+        {% for result in results %}
+            <div class='archiveResults'>Result:
+            <h4 class='result'>{{result.day}}/{{result.month}}</h4>
+            <p class='result'>{{result.fact}}</p>
+            {% if result.link %}
+                <p>Click <a href='{{result.link}}' target='blank'>here</a> to learn more about this event</p>
+            {% endif %}
+            {% if result.image %}
+                <a href='{{result.image}}' target='blank'>
+                    <img src='{{result.image}}' alt='associated image' style='width:200px;height:200px'>
+                </a>
+            {% endif %}
+            </div>    
+        {% endfor %}
+    </div>
 
     {% endif %}
 

@@ -14,11 +14,6 @@ if(isset($_GET['search'])){
     $searchBarValue = "";
 }
 
-$sortByValueDEF = "";
-$sortByValueASC = "dateASC";
-$sortByValueDES = "dateDES";
-
-
 if(isset($_GET['sortBy'])) {
     $sortBy = (string) $_GET['sortBy'];
 } else {
@@ -44,6 +39,19 @@ $limitByValues = [
     ['option' => '20']
 ];
 
+if(isset($_GET['search'])){
+    $search = $_GET['search'];
+    if($search){
+        $searchTermExtractor = new SearchTermExtractor($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
+        $searchTerms = $searchTermExtractor->extractSearchTerms();
+        $dataBaseSearcher = new DatabaseSearcher($searchTerms);
+        $results = $dataBaseSearcher->getSearchResults();
+        $totalResults = $dataBaseSearcher->countSearchResults();
+    }
+} else {
+    $searchTerms = "";
+    $totalResults = "";
+}
 
 echo $twig->render('page.template.html.twig', [
     'pageTitle' => 'test', 
@@ -52,27 +60,10 @@ echo $twig->render('page.template.html.twig', [
     'sortBy' => $sortBy,
     'sortByValues' => $sortByValues,
     'limitBy' => $limitBy,
-    'limitByValues' => $limitByValues
+    'limitByValues' => $limitByValues,
+    'searchTerms' => $searchTerms,
+    'totalResults' => $totalResults,
+    'results' => $results
 ]);
 
-
-
-
 ?>
-
-
-<?php
-    if(isset($_GET['search'])){
-        $search = $_GET['search'];
-        if($search){
-            $searchTermExtractor = new SearchTermExtractor($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
-            $searchTerms = $searchTermExtractor->extractSearchTerms();
-            $dataBaseSearcher = new DatabaseSearcher($searchTerms);
-            $results = $dataBaseSearcher->getSearchResults();
-            $totalResults = $dataBaseSearcher->countSearchResults();
-            $displayResults = new ResultsDisplayer($searchTerms, $results, $totalResults);
-            $displayResults->resultDisplayer();
-        } else {
-            echo "Please enter a search term.";
-        }
-    }

@@ -4,10 +4,18 @@
             "htdocs/classes/"
         ]
     },
+    
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
 
     "require": {
         "twig/twig": "^3.0"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "9.*"
     }
 }
-
-

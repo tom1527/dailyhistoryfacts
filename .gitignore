@@ -354,3 +354,5 @@ MigrationBackup/
 
 vendor
 
+tests/test_output.xml
+
