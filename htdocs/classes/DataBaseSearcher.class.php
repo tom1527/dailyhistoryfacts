@@ -27,8 +27,6 @@ class DatabaseSearcher extends DataBaseConn {
                 break;
         }
 
-        $limitBy = "LIMIT $searchTerms[limitBy] OFFSET $searchTerms[offset]";
-
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') ORDER BY $this->sortBy Limit $this->limit OFFSET $this->offset";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindValue(':searchTerm', $searchTerms['searchTerm']);
@@ -47,5 +45,15 @@ class DatabaseSearcher extends DataBaseConn {
         $results = $stmt->fetchAll();
         $totalNumberOfSearchResults = count($results);
         return $totalNumberOfSearchResults;
+    }
+
+    public function returnDailyFact($currentDay, $currentMonth): array {
+
+        $sql = "SELECT * FROM facts WHERE day = '$currentDay' && month = '$currentMonth' ORDER BY RAND()";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $results = $stmt->fetchAll();
+        return $results;
     }
 }

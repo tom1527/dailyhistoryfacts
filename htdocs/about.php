@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<?php require_once '../vendor/autoload.php'; ?>
+
 <html>
     <head>
         <title>Archive</title>
@@ -10,6 +13,9 @@
     </header>
 
     <?php require 'includes/navBar.inc.php'; ?>
+
+
+
 
     <?php require 'includes/footer.inc.html'; ?>
 

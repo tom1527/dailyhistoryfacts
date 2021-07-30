@@ -20,6 +20,12 @@ if(isset($_GET['sortBy'])) {
     $sortBy="";
 }
 
+if(isset($_GET['pageNo'])) {
+    $pageNo = (int) $_GET['pageNo'];
+} else {
+    $pageNo="";
+}
+
 $sortByValues = [
     ['option' => '---', 'label' => '---'],
     ['option' => 'dateASC', 'label' => 'Date Ascending'],
@@ -47,22 +53,41 @@ if(isset($_GET['search'])){
         $dataBaseSearcher = new DatabaseSearcher($searchTerms);
         $results = $dataBaseSearcher->getSearchResults();
         $totalResults = $dataBaseSearcher->countSearchResults();
+        $totalPages = ceil($totalResults/$limitBy);
+    } else {
+        $searchTerms = "";
+        $totalResults = "";
+        $results = "";
+        $totalPages = "";
     }
 } else {
     $searchTerms = "";
     $totalResults = "";
+    $results = "";
+    $totalPages = "";
 }
 
-echo $twig->render('page.template.html.twig', [
+
+$page = $_SERVER['REQUEST_URI'];
+$page = ltrim($page, "/");
+$page = substr($page, 0 , strpos($page, "."));
+ 
+
+
+
+echo $twig->render('archive.template.html.twig', [
     'pageTitle' => 'test', 
     'header' => 'Archive',
+    'page' => $page,
     'searchBarValue' => $searchBarValue,
     'sortBy' => $sortBy,
+    'pageNo' => $pageNo,
     'sortByValues' => $sortByValues,
     'limitBy' => $limitBy,
     'limitByValues' => $limitByValues,
     'searchTerms' => $searchTerms,
     'totalResults' => $totalResults,
+    'totalPages' => $totalPages,
     'results' => $results
 ]);
 

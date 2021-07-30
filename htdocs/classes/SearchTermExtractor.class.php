@@ -14,10 +14,8 @@ class SearchTermExtractor {
 
     public function extractSearchTerms(): array {
         
-
         $this->offset = ($this->pageNo - 1) * $this->limitBy;
-
-
+        
         $searchTerms = array();
         $searchTerms += ["searchTerm" => $this->searchTerm, "sortBy" => $this->sortBy, "limitBy" => $this->limitBy, "offset" => $this->offset];
         return $searchTerms;

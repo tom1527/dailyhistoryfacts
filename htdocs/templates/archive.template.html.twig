@@ -11,19 +11,7 @@
         <h1>{{header}}</h1>
     </header>
 
-
-
-
-    <div class="navbar">
-        <nav>
-            <ul>
-                <li><a class="{% if craft.request.getPath() ==  entry.uri %}{% endif %}" href="../daily-fact.php">Daily Fact</a></li>
-                <li><a class="{% if craft.request.getPath() ==  entry.uri %}{% endif %}" href="../archive.php">Archive</a></li>
-                <li><a class="{% if craft.request.getPath() ==  entry.uri %}{% endif %}" href="../about.php">About</a></li>
-                <li><a class="{% if craft.request.getPath() ==  entry.uri %}active{% endif %}" href="page.class.php">Test</a></li>
-            </ul>    
-        </nav>
-    </div>
+    {% include 'navBar.template.html.twig' %}
 
     {% if craft.request.getPath() ==  entry.uri  %}
     <span class="formSpan">
@@ -65,14 +53,16 @@
     </span>
 
     {% if searchTerms| default(null)%}
+
     <div>
         Search of "{{searchTerms.searchTerm}}" returned {{totalResults}} results.
     </div>
+    
     {% endif %}
 
     <div>
         {% for result in results %}
-            <div class='archiveResults'>Result:
+            <div class='archiveResults'>Result: {{loop.index}}
             <h4 class='result'>{{result.day}}/{{result.month}}</h4>
             <p class='result'>{{result.fact}}</p>
             {% if result.link %}
@@ -89,35 +79,24 @@
 
     {% endif %}
 
-
-    
+    {% if searchTerms.searchTerm %}
 
     <div  class="pagination">
         <ul>
-            <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=1&limitBy=$limitResults" ?>">First</a></li>
-            <li class="<?php if($pageNo <= 1){ echo 'disabled'; } ?>">
-                <a href="<?php if($pageNo <= 1){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo - 1)."&limitBy=$limitResults"; } ?>">Prev</a>
+            <li><a href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo=1&limitBy={{searchTerms.limitBy}}">First</a></li>
+            <li class="{% if paegNo <= 1 %}disabled{% endif %}">
+                <a href="{% if paegNo <= 1 %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo - 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Prev</a>
             </li>
-            <li class="<?php if($pageNo >= $totalPages){ echo 'disabled'; } ?>">
-                <a href="<?php if($pageNo >= $totalPages){ echo '#'; } else { echo "?search=$searchTerm&sortBy=$sortBy&pageNo=".($pageNo + 1)."&limitBy=$limitResults"; } ?>">Next</a>
+            <li class="{% if pageNo >= totalPages %}disabled{% endif %}">
+                <a href="{% if pageNo >= totalPages %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo + 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Next</a>
             </li>
-            <li><a href="<?php echo "?search=$searchTerm&sortBy=$sortBy&pageNo=$totalPages&limitBy=$limitResults; "?>">Last</a></li>
+            <li><a href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{totalPages}}&limitBy={{searchTerms.limitBy}}">Last</a></li>
         </ul>
     </div>
-     
 
-    <footer>
-        <span class="footerText">
-            Admin contact: <a href="mailto:twbradley@hotmail.com">twbradley@hotmail.com</a>
-        </span>
-        <span style="display: inline-block;">
-            <a href="https://www.linkedin.com/in/thomas-bradley-13a08616a/" target="blank">
-                <img class="socialMedia" src="https://www.edigitalagency.com.au/wp-content/uploads/Linkedin-logo-icon-png.png" alt="Linkedin-logo-icon-png"/>
-            </a>
-        </span>
-        <span class="footerText footerLink">
-            <a href="https://www.linkedin.com/in/thomas-bradley-13a08616a/" target="blank">Thomas Bradley</a>
-        </span>
-    </footer>
+    {% endif %}
+     
+    {% include 'footer.template.html.twig' %}
+
     </body>
 </htmml>
