@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<htmml>
+    <body>
+    <head>
+        {% block head %}
+            <title>{% block title %}{% endblock %}</title>
+            <link rel="stylesheet" href="../assests/style.css"/>
+        {% endblock %}
+    </head> 
+
+    <header>
+        {% block header %}
+        <h1>{% block inner_header %}{% endblock %}</h1>
+        {% endblock %}
+    </header>
+
+    {% block navbar %}
+        {% embed 'navBar.template.html.twig' %}
+        {% endembed %}
+    {% endblock %}
+
+    {% block maincontent %}
+    {% endblock %}
+   
+    {% block footer %}   
+        {% embed 'footer.template.html.twig' %}
+        {% endembed %}
+    {% endblock %}
+    </body>
+</htmml>

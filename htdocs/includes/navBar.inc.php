@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<div class="navbar">
+    <div class="navbar">
         <nav>
             <ul>
                 <li><a <?php echo checkActiveClass("daily-fact"); ?>href="daily-fact.php">Daily Fact</a></li>

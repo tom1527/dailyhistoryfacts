@@ -1,6 +1,4 @@
 <?php
-
-
 class ResultsDisplayer {
 
     private array $searchTerms;

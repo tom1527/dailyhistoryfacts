@@ -27,3 +27,5 @@ echo $twig->render('daily-fact.template.html.twig', [
     'date' => $date,
     'dailyFactInfo' => $dailyFactInfo
 ]);
+
+?>
