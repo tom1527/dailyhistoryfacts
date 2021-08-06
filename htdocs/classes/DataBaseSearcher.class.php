@@ -17,10 +17,10 @@ class DatabaseSearcher extends DataBaseConn {
  
         switch($this->sortBy){
             case "dateASC":
-                $this->sortBy = "`day` ASC, `month` ASC";
+                $this->sortBy = "`month` ASC, `day` ASC";
                 break;
             case "dateDES":
-                $this->sortBy = "`day` DESC, `month` DESC";
+                $this->sortBy = "`month` DESC, `day` DESC";
                 break;
             case "---":
                 $this->sortBy = "NULL";

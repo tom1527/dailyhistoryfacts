@@ -10,7 +10,7 @@
             <ul>
                 <li><a href="index.php">Index</a></li>
                 <li><a href="form.php">Form</a></li>
-                <li><a href="daily-fact.php">Daily Fact</a></li>
+                <li><a href="index.php">Daily Fact</a></li>
                 <li><a href="test.php">Test</a></li>
                 <li><a class="active" href="insert-form.php">Insert Test</a></li>
                 <li><a href="archive.php">Archive</a></li>

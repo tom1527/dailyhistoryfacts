@@ -1,11 +1,11 @@
 <?php
-require_once '../../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Symfony\Component\HttpFoundation\Request;
 
-$loader = new FilesystemLoader('..\templates');
+$loader = new FilesystemLoader('templates');
 $twig = new Environment($loader);
 
 if(isset($_GET['search'])){
@@ -76,7 +76,7 @@ $page = substr($page, 0 , strpos($page, "."));
 
 
 echo $twig->render('archive.template.html.twig', [
-    'pageTitle' => 'test', 
+    'pageTitle' => 'Archive', 
     'header' => 'Archive',
     'page' => $page,
     'searchBarValue' => $searchBarValue,
@@ -88,7 +88,7 @@ echo $twig->render('archive.template.html.twig', [
     'searchTerms' => $searchTerms,
     'totalResults' => $totalResults,
     'totalPages' => $totalPages,
-    'results' => $results
+    'results' => $results,
 ]);
 
 ?>

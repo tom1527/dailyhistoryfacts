@@ -2,7 +2,7 @@
     class DataBaseConn {
         private $host = "localhost";
         private $user = "root";
-        private $psw = "password";
+        private $psw = "KgdS8Ilbf8J3";
         private $dbname = "interestingfacts";
 
         protected function connect(): PDO {

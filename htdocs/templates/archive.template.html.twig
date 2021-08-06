@@ -52,12 +52,18 @@
     </form>
     </span>
 
-    {% if searchTerms| default(null)%}
+    {% if searchTerms.searchTerm is defined %}
 
     <div>
         Search of "{{searchTerms.searchTerm}}" returned {{totalResults}} results.
     </div>
-    
+
+    {% else %}
+
+    <div>
+        Please enter a search term.
+    </div>
+
     {% endif %}
 
     <div>
@@ -84,8 +90,8 @@
     <div  class="pagination">
         <ul>
             <li><a href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo=1&limitBy={{searchTerms.limitBy}}">First</a></li>
-            <li class="{% if paegNo <= 1 %}disabled{% endif %}">
-                <a href="{% if paegNo <= 1 %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo - 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Prev</a>
+            <li class="{% if pageNo <= 1 %}disabled{% endif %}">
+                <a href="{% if pageNo <= 1 %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo - 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Prev</a>
             </li>
             <li class="{% if pageNo >= totalPages %}disabled{% endif %}">
                 <a href="{% if pageNo >= totalPages %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo + 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Next</a>

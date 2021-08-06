@@ -1,33 +1,31 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Index</title>
-        <link rel="stylesheet" href="assests/style.css">
-        <style>
+<?php
+require_once '../vendor/autoload.php';
 
-        </style>
-    </head>    
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Symfony\Component\HttpFoundation\Request;
 
-    <header>
-        <h1>
-            Tom's website thing
-        </h1>        
-    </header>
+$loader = new FilesystemLoader('templates');
+$twig = new Environment($loader);
 
-    <div class="navbar">
-        <nav>
-            <ul>
-                <li><a class="active" href="index.php">Index</a></li>
-                <li><a href="classes/daily-fact.class.php">Daily Fact</a></li>
-                <li><a href="classes/archive.class.php">Archive</a></li>
-                <li><a href="classes/about.class.php">About me</a></li>
-                <li><a href="insert-form.php">Insert Test</a></li>
-            </ul>    
-        </nav>
-    </div>  
+$date = date("F jS");
 
-    <?php
-        require "footer.html";
-    ?>
-    </body>
-</html>
+$page = $_SERVER['REQUEST_URI'];
+$page = ltrim($page, "/");
+$page = substr($page, 0 , strpos($page, "."));
+$value[] = "";
+$dataBaseSearcher = new DatabaseSearcher($value);
+$currentDay = date("d");
+$currentMonth = date("m");
+$dailyFactInfo = $dataBaseSearcher->returnDailyFact($currentDay, $currentMonth);
+
+
+echo $twig->render('index.template.html.twig', [
+    'pageTitle' => 'Daily Fact',
+    'header' => 'Fact of the day',
+    'page' => $page,
+    'date' => $date,
+    'dailyFactInfo' => $dailyFactInfo
+]);
+
+?>
