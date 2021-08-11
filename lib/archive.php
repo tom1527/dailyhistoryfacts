@@ -5,7 +5,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Symfony\Component\HttpFoundation\Request;
 
-$loader = new FilesystemLoader('templates');
+$loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
 if(isset($_GET['search'])){
@@ -67,18 +67,10 @@ if(isset($_GET['search'])){
     $totalPages = "";
 }
 
-
-$page = $_SERVER['REQUEST_URI'];
-$page = ltrim($page, "/");
-$page = substr($page, 0 , strpos($page, "."));
- 
-
-
-
 echo $twig->render('archive.template.html.twig', [
     'pageTitle' => 'Archive', 
     'header' => 'Archive',
-    'page' => $page,
+    'page' => 'archive',
     'searchBarValue' => $searchBarValue,
     'sortBy' => $sortBy,
     'pageNo' => $pageNo,
