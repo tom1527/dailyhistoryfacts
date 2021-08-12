@@ -11,10 +11,10 @@ $twig = new Environment($loader);
 $date = date("F jS");
 
 $value[] = "";
-$dataBaseSearcher = new DatabaseSearcher($value);
+$databaseSearcher = new DatabaseSearcher($value);
 $currentDay = date("d");
 $currentMonth = date("m");
-$dailyFactInfo = $dataBaseSearcher->returnDailyFact($currentDay, $currentMonth);
+$dailyFactInfo = $databaseSearcher->returnDailyFact($currentDay, $currentMonth);
 
 
 echo $twig->render('index.template.html.twig', [
