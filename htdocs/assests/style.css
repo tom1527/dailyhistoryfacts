@@ -103,6 +103,15 @@ section {
     max-height: 70%;
 }
 
+.aboutImage {
+    width: 80px;
+    height: 102px;
+    padding-right: 500px;
+    padding-top: 50px;
+    overflow: hidden;
+    float: right;
+}
+
 .dailyFact {
     font-family: Arial, Helvetica, sans-serif;
     font-size: larger;
@@ -116,7 +125,6 @@ section {
 }
 
 .socialMedia {
-
     width: 32px;
     height: 32px;
     padding-left: 50px;
