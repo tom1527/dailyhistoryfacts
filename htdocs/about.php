@@ -9,5 +9,5 @@ $loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
 echo $twig->render('about.template.html.twig', [
-    'page' => 'about'
+    'page' => 'About'
 ]);

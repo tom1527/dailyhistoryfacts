@@ -1,9 +1,13 @@
-<div class="navbar">
-        <nav>  
-            <ul>
-                <li><a class="{% if page == "index" %}active{% endif %}" href="index.php">Daily Fact</a></li>
-                <li><a class="{% if page == "archive" %}active{% endif %}" href="archive.php">Archive</a></li>
-                <li><a class="{% if page == "about" %}active{% endif %}" href="about.php">About</a></li>
-            </ul>    
-        </nav>
-</div>
+<nav class="navbar-nav navbar-expand-sm navbar-expand-lg px-3 sticky-top bg-dark">  
+    <ul class="nav nav-pills nav-justified">
+        <li class="nav-item">
+            <a class="nav-link{% if page == "Daily Fact" %} active{% endif %}" href="index.php">Daily Fact</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link{% if page == "Archive" %} active{% endif %}" href="archive.php">Archive</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link{% if page == "About" %} active{% endif %}" href="about.php">About</a>
+        </li>
+    </ul>    
+</nav>

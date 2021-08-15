@@ -68,9 +68,7 @@ if(isset($_GET['search'])){
 }
 
 echo $twig->render('archive.template.html.twig', [
-    'pageTitle' => 'Archive', 
-    'header' => 'Archive',
-    'page' => 'archive',
+    'page' => 'Archive',
     'searchBarValue' => $searchBarValue,
     'sortBy' => $sortBy,
     'pageNo' => $pageNo,

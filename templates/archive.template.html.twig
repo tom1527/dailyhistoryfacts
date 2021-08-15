@@ -1,17 +1,6 @@
-<!DOCTYPE HTML>
-<htmml>
-    <body>
-    <head>
-        <title>{{pageTitle}}</title>
-        <link rel="stylesheet" href="assests/style.css">
-        <link>
-    </head> 
+{% extends "base.template.html.twig" %}
 
-    <header>
-        <h1>{{header}}</h1>
-    </header>
-
-    {% include 'navBar.template.html.twig' %}
+{% block maincontent %}
 
     {% if craft.request.getPath() ==  entry.uri  %}
     <span class="formSpan">
@@ -102,7 +91,4 @@
 
     {% endif %}
      
-    {% include 'footer.template.html.twig' %}
-
-    </body>
-</htmml>
+{% endblock %}

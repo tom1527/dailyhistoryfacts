@@ -18,9 +18,7 @@ $dailyFactInfo = $databaseSearcher->returnDailyFact($currentDay, $currentMonth);
 
 
 echo $twig->render('index.template.html.twig', [
-    'pageTitle' => 'Daily Fact',
-    'header' => 'Fact of the day',
-    'page' => 'index',
+    'page' => 'Daily Fact',
     'date' => $date,
     'dailyFactInfo' => $dailyFactInfo
 ]);
