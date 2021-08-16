@@ -2,92 +2,103 @@
 
 {% block maincontent %}
 
+<div class="container-fluid">
     {% if craft.request.getPath() ==  entry.uri  %}
-    <span class="formSpan">
-    <form action="" method="GET">
-        <div class="archiveForm">
-            <label class="searchBarTitle" for="search">Browse prior facts:</label><br>
-            <input class="searchBar" type="text" name="search" placeholder="Search" value="{{searchBarValue | default('') }}">
-            
-        </div>
-        <div class="archiveForm">
-            <label class= "selectBarTitle" for='sortBy'>Sort by:</label><br>
-            <select class="selectBar" id="sortBy" name="sortBy">
-                {% for options in sortByValues %}
-                    {% set selected = '' %}
-                    {% if options.option == sortBy %}
-                        {% set selected = 'selected' %}
-                    {% endif %}
-                    <option value="{{options.option}}" {{ selected }}>{{options.label}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <input type="hidden" name="pageNo" value="1"/>
-        <div class="archiveForm">
-        <label class= "selectBarTitle" for='limitBy'>Limit results per page:</label><br>
-            <select class="selectBar" id="limitBy" name="limitBy">
-                {% for options in limitByValues %}
-                    {% set selected = '' %}
-                    {% if options.option == limitBy %}
-                        {% set selected = 'selected' %}
-                    {% endif %}
-                    <option value="{{options.option}}" {{ selected }}>{{options.option}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <input class="submit" type="submit" value="Search">
-        </div>
-    </form>
-    </span>
+    <div class="container-fluid mt-3">
+        <form action="" method="GET" class="row g-3">
+            <div class="col-md-4">
+                <div>
+                    <label class="form-label fs-3" for="search"><b>Browse prior facts:</b></label><br>
+                    <input class="form-control bg-light" type="text" name="search" placeholder="Search" value="{{searchBarValue | default('') }}">
+                </div>
+            </div>
+            <div class="col-md-auto">
+                <label class="form-label fs-3" for='sortBy'><b>Sort by:</b></label><br>
+                <select class="form-select bg-light" id="sortBy" name="sortBy">
+                    {% for options in sortByValues %}
+                        {% set selected = '' %}
+                        {% if options.option == sortBy %}
+                            {% set selected = 'selected' %}
+                        {% endif %}
+                        <option value="{{options.option}}" {{ selected }}>{{options.label}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" name="pageNo" value="1"/>
+            <div class="col-md-auto">
+            <label class="form-label fs-3" for='limitBy'><b>Limit results per page:</b></label><br>
+                <select class="form-select bg-light" id="limitBy" name="limitBy">
+                    {% for options in limitByValues %}
+                        {% set selected = '' %}
+                        {% if options.option == limitBy %}
+                            {% set selected = 'selected' %}
+                        {% endif %}
+                        <option value="{{options.option}}" {{ selected }}>{{options.option}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
 
     {% if searchTerms.searchTerm is defined %}
 
-    <div>
-        Search of "{{searchTerms.searchTerm}}" returned {{totalResults}} results.
+    <div class="m-3">
+        <p class="fs-5">Search of "{{searchTerms.searchTerm}}" returned {{totalResults}} results.</p>
     </div>
 
     {% else %}
 
-    <div>
-        Please enter a search term.
+    <div class="m-3">
+        <p class="fs-5 text-secondary">Please enter a search term.</p>
     </div>
 
     {% endif %}
 
-    <div>
-        {% for result in results %}
-            <div class='archiveResults'>Result: {{loop.index}}
-            <h4 class='result'>{{result.day}}/{{result.month}}</h4>
-            <p class='result'>{{result.fact}}</p>
-            {% if result.link %}
-                <p>Click <a href='{{result.link}}' target='blank'>here</a> to learn more about this event</p>
-            {% endif %}
-            {% if result.image %}
-                <a href='{{result.image}}' target='blank'>
-                    <img src='{{result.image}}' alt='associated image' style='width:200px;height:200px'>
-                </a>
-            {% endif %}
-            </div>    
-        {% endfor %}
+    <div class="container-fluid">
+        <div>
+            {% for result in results %}
+                <p class="text-secondary">Result: {{loop.index}}
+                <div class="card-body bg-light border-top border-3 border-bottom mb-5">
+                    <h4 class="card-title fs-4">{{result.day}}/{{result.month}}</h4>
+                    <p class="card-title fs-4">{{result.fact}}</p>
+                    {% if result.link %}
+                        <p class="card-link text-secondary fs-5">Click <a href='{{result.link}}' target='blank'>here</a> to learn more about this event</p>
+                    {% endif %}
+                    {% if result.image %}
+                        <a href="{{result.image}}" target="blank">
+                            <img src='{{result.image}}' alt='associated image' class="mb-3" style='width:200px;height:200px'>
+                        </a>
+                    {% endif %}
+                </div>    
+            {% endfor %}
+        </div>
     </div>
 
     {% endif %}
 
     {% if searchTerms.searchTerm %}
 
-    <div  class="pagination">
-        <ul>
-            <li><a href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo=1&limitBy={{searchTerms.limitBy}}">First</a></li>
-            <li class="{% if pageNo <= 1 %}disabled{% endif %}">
-                <a href="{% if pageNo <= 1 %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo - 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Prev</a>
-            </li>
-            <li class="{% if pageNo >= totalPages %}disabled{% endif %}">
-                <a href="{% if pageNo >= totalPages %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo + 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Next</a>
-            </li>
-            <li><a href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{totalPages}}&limitBy={{searchTerms.limitBy}}">Last</a></li>
-        </ul>
-    </div>
+<nav aria-label="Pagination">
+  <ul class="pagination pagination-lg justify-content-center">
+    <li class="page-item">
+        <a class="page-link" href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo=1&limitBy={{searchTerms.limitBy}}">First</a>
+    </li>
+    <li class="page-item {% if pageNo <= 1 %}disabled{% endif %}">
+        <a class="page-link" href="{% if pageNo <= 1 %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo - 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Previous</a>
+    </li>
+    <li class="page-item {% if pageNo >= totalPages %}disabled{% endif %}">
+        <a class="page-link" href="{% if pageNo >= totalPages %}#{% else %}?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{pageNo + 1}}&limitBy={{searchTerms.limitBy}}{% endif %}">Next</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="?search={{searchTerms.searchTerm}}&sortBy={{searchTerms.sortBy}}&pageNo={{totalPages}}&limitBy={{searchTerms.limitBy}}">Last</a>
+    </li>
+  </ul>
+</nav>
+
+</div>
 
     {% endif %}
      
