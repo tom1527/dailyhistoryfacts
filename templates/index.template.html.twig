@@ -6,7 +6,7 @@
     <div class="col">
         <div class="row g-1 gy-3">
         
-            <div class="col align-self-start col-lg-12 fs-3">
+            <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
                 <div class="card bg-light">
                     <div class="card-body">
                         <h1 class="card-title"><b> On {{date}} in the past...</b></h1>
@@ -33,10 +33,11 @@
 
             <div class="col align-self-start col-lg-12">
                 <a href="{{dailyFactInfo | first.image}}" target="blank">
-                    <img src="{{dailyFactInfo | first.image}}" class="img-fluid border" alt="associated image">
+                    <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border" alt="associated image">
                 </a>
             </div>
 
+        <img style="width: 32px; height:32px;" src="{{dailyFactInfo | first.image}}" class="border" alt="associated image">
         </div>
     </div>
 
@@ -44,9 +45,12 @@
         <div class="card bg-light">
             <div class="card-body">
                 <h1 class="card-title">An Interesting Historical Fact</h1>
-                <p>This page displays an interesting fact that occured on today's date sometime in the past. Although care has been taken to verify the information 
-                    below, it should be noted that I am not an historian. Refreshing the page may display an alternate fact for today. <br> If you wish to see facts from other dates,
-                    feel free to visit the archive page. Please bear in mind that some dates may not have an associated fact yet.</p>
+                <p>This page displays an interesting fact that occurred on today's date sometime in the past. Although care has been taken to verify the information 
+                    below, it should be noted that I am not an historian. Refreshing the page may display an alternate fact for today. <br/> If you wish to see facts from other dates,
+                    feel free to visit the archive page. Please bear in mind that some dates may not have an associated fact yet. <br/>
+                    If you notice any typos, mistakes, inaccuracies or if you wish to contact me for some other reason, feel free to email me at the address provided at the bottom of 
+                    the page and I will be happy to implement any necessary changes.
+                </p>
                 <h4 class="card-title">Today's date is: {{date}}</h4>
             </div>
         </div>
