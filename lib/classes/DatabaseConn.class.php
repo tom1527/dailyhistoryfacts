@@ -1,6 +1,6 @@
 <?php
     class DataBaseConn {
-        private $host = "localhost";
+        private $host = "db";
         private $user = "root";
         private $psw = "KgdS8Ilbf8J3";
         private $dbname = "interestingfacts";
