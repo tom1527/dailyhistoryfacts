@@ -1,6 +1,6 @@
 <?php
     class DataBaseConn {
-        private $host = "db";
+        private $host = "wamptest-website_db_1";
         private $user = "root";
         private $psw = "KgdS8Ilbf8J3";
         private $dbname = "interestingfacts";

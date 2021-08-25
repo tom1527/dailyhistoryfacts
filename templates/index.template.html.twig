@@ -9,7 +9,7 @@
             <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
                 <div class="card bg-light">
                     <div class="card-body">
-                        <h1 class="card-title"><b> On {{date}} in the past...</b></h1>
+                        <h1 class="card-title"><b id="factDate"></b></h1>
                         <br/>
                         <b>
                             {% if dailyFactInfo | first.fact %}
@@ -49,11 +49,32 @@
                     If you notice any typos, mistakes, inaccuracies or if you wish to contact me for some other reason, feel free to email me at the address provided at the bottom of 
                     the page and I will be happy to implement any necessary changes.
                 </p>
-                <h4 class="card-title">Today's date is: {{date}}</h4>
+                <h4 id="today" class="card-title"></h4>
             </div>
         </div>
     </div>
 
 </div>
+
+<script>
+    var date = new Date();
+    var month = date.getUTCMonth();
+    var month = date.toLocaleString('default', { month: 'long' });
+    var day = date.getUTCDate();
+    var nth = function(d) {
+    if (d > 3 && d < 21) return 'th';
+        switch (d % 10) {
+            case 1:  return "st";
+            case 2:  return "nd";
+            case 3:  return "rd";
+            default: return "th";
+        }
+    }
+    today = "Today's date is: " + month + " " + day + nth(day);
+    factDate = "On " + month + " " + day + nth(day) + " in the past... ";
+    document.getElementById("today").innerHTML = today;
+    document.getElementById("factDate").innerHTML = factDate;
+    String(time)
+</script>
 
 {% endblock %}
