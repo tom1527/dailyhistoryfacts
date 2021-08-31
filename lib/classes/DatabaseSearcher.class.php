@@ -49,6 +49,14 @@ class DatabaseSearcher extends DataBaseConn {
 
     public function returnDailyFact($currentDay, $currentMonth): array {
 
+        if(strlen($currentDay) == 1) {
+            $currentDay = "0".$currentDay;
+        }
+
+        if(strlen($currentMonth) == 1) {
+            $currentMonth = "0".$currentMonth;
+        }
+
         $sql = "SELECT * FROM facts WHERE day = '$currentDay' && month = '$currentMonth' ORDER BY RAND()";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();

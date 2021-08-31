@@ -3,40 +3,8 @@
 {% block maincontent %}
 
 <div class="container-fluid row lg pt-4">
-    <div class="col">
-        <div class="row g-1 gy-3">
-        
-            <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <h1 class="card-title"><b id="factDate"></b></h1>
-                        <br/>
-                        <b>
-                            {% if dailyFactInfo | first.fact %}
-                                {{dailyFactInfo | first.fact}}
-                            {% else %}
-                                Error: the entry for this date is most likely empty. This will be fixed as the website is updated.
-                            {% endif %}
-                        </b>
-                        <br/>
-                        <br/>
-                        <p class="card-link text-secondary">
-                        {% if dailyFactInfo | first.link %}
-                            Click <a href="{{dailyFactInfo | first.link}}" target="blank"><b>here</b></a> to learn more.
-                        {% else %}
-                            Error: link not found.
-                        </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="col align-self-start col-lg-12">
-                <a href="{{dailyFactInfo | first.image}}" target="blank">
-                    <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image">
-                </a>
-            </div>
-        </div>
+    <div id="daily-fact" class="col">
+        <p>Loading Daily Fact...</p>
     </div>
 
     <div class="col col-lg-3 fs-6">
@@ -58,23 +26,43 @@
 
 <script>
     var date = new Date();
-    var month = date.getUTCMonth();
-    var month = date.toLocaleString('default', { month: 'long' });
-    var day = date.getUTCDate();
-    var nth = function(d) {
-    if (d > 3 && d < 21) return 'th';
-        switch (d % 10) {
+    var month = date.getMonth() + 1;
+    var monthLong = date.toLocaleString('default', { month: 'long' });
+    var day = date.getDate();
+    var nth = function(value) {
+    if (value > 3 && value < 21) return 'th';
+        switch (value % 10) {
             case 1:  return "st";
             case 2:  return "nd";
             case 3:  return "rd";
             default: return "th";
         }
     }
-    today = "Today's date is: " + month + " " + day + nth(day);
-    factDate = "On " + month + " " + day + nth(day) + " in the past... ";
+    today = "Today's date is: " + monthLong + " " + day + nth(day);
+    factDate = "On " + monthLong + " " + day + nth(day) + " in the past... ";
     document.getElementById("today").innerHTML = today;
-    document.getElementById("factDate").innerHTML = factDate;
-    String(time)
+    let url = "daily-fact.php?month=" + month + "&day=" + day;
+
+    const myRequest = new Request(url, {
+        credentials: 'include',
+        type: 'GET',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'text/html',
+        },
+        mode: 'same-origin',
+        cache: 'default',
+    });
+
+    let div=document.getElementById("daily-fact");
+
+    fetch(myRequest)
+        .then(response => response.text())
+        .then(html =>  {
+            div.innerHTML = html;
+            document.getElementById("factDate").innerHTML = factDate;
+        } 
+        );
 </script>
 
 {% endblock %}
