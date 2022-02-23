@@ -1,35 +1,74 @@
-    <div class="row g-1 gy-3">
-    
-        <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <h1 class="card-title"><b id="factDate"></b></h1>
-                    <br/>
-                    <b>
-                        {% if dailyFactInfo | first.fact %}
-                            {{dailyFactInfo | first.fact}}
-                        {% else %}
-                            Error: the entry for this date is most likely empty. This will be fixed as the website is updated.
-                        {% endif %}
-                    </b>
-                    <br/>
-                    <br/>
-                    <p class="card-link text-secondary">
-                    {% if dailyFactInfo | first.link %}
-                        Click <a href="{{dailyFactInfo | first.link}}" target="blank"><b>here</b></a> to learn more.
+<div id="first" class="row g-1 gy-3" style="">
+    <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h1 class="card-title d-flex justify-content-between align-items-center"><b id="firstFactDate"></b><button onclick="changeFact()" type="button" id="changeFact" class="btn btn-primary"><b>See alternate fact</b></button></h1>
+                <br/>
+                <b>
+                    {% if dailyFactInfo | first.fact %}
+                        {{dailyFactInfo | first.fact}}
                     {% else %}
-                        Error: link not found.
-                    </p>
+                        Error: the entry for this date is most likely empty. This will be fixed as the website is updated.
                     {% endif %}
-                </div>
+                </b>
+                <br/>
+                <br/>
+                <p class="card-link text-secondary">
+                {% if dailyFactInfo | first.link %}
+                    Click <a href="{{dailyFactInfo | first.link}}" target="blank"><b>here</b></a> to learn more.
+                {% else %}
+                    Error: link not found.
+                </p>
+                {% endif %}
             </div>
         </div>
-
-        <div class="col align-self-start col-lg-12">
-            <a href="{{dailyFactInfo | first.image}}" target="blank">
-                <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image">
-            </a>
+        <div class="card bg-light">
         </div>
     </div>
+
+    <div class="col align-self-start col-lg-12">
+        <a href="{{dailyFactInfo | first.image}}" target="blank">
+            <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image">
+        </a>
+    </div>
+</div>
+
+<div id="last" class="row g-1 gy-3" style="display: none;">
+    <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h1 class="card-title d-flex justify-content-between align-items-center"><b id="lastFactDate"></b><button onclick="changeFact()" type="button" class="btn btn-primary"><b>See alternate fact</b></button></h1>
+                <br/>
+                <b>
+                    {% if dailyFactInfo | last.fact %}
+                        {{dailyFactInfo | last.fact}}
+                    {% else %}
+                        Error: the entry for this date is most likely empty. This will be fixed as the website is updated.
+                    {% endif %}
+                </b>
+                <br/>
+                <br/>
+                <p class="card-link text-secondary">
+                {% if dailyFactInfo | last.link %}
+                    Click <a href="{{dailyFactInfo | last.link}}" target="blank"><b>here</b></a> to learn more.
+                {% else %}
+                    Error: link not found.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card bg-light">
+        </div>
+    </div>
+
+    <div class="col align-self-start col-lg-12">
+        <a href="{{dailyFactInfo | last.image}}" target="blank">
+            <img style="width: 500px; height:auto;" src="{{dailyFactInfo | last.image}}" class="border img-fluid" alt="associated image">
+        </a>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="scripts/index.js"></script>
 
     

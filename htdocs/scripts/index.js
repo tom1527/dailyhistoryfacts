@@ -14,6 +14,7 @@ if (value > 3 && value < 21) return 'th';
 today = "Today's date is: " + monthLong + " " + day + nth(day);
 factDate = "On " + monthLong + " " + day + nth(day) + " in the past... ";
 document.getElementById("today").innerHTML = today;
+    //document.getElementById("changeFact").innerHTML = "hi";
 let url = "daily-fact.php?month=" + month + "&day=" + day;
 
 const dailyFactDate = new Request(url, {
@@ -33,6 +34,25 @@ fetch(dailyFactDate)
     .then(response => response.text())
     .then(html =>  {
         div.innerHTML = html;
-        document.getElementById("factDate").innerHTML = factDate;
+        document.getElementById("firstFactDate").innerHTML = factDate;
     } 
-    );
+);
+
+function changeFact() {
+    var first = document.getElementById("first");
+    var last = document.getElementById("last");
+    if(first.style.display === "none") {
+        first.style.display = "block";
+    } else {
+        first.style.display = "none";
+    } 
+    if(last.style.display === "none") {
+        last.style.display = "block";
+    } else {
+        last.style.display = "none";
+    }
+    document.getElementById("lastFactDate").innerHTML = factDate;
+
+
+
+}
