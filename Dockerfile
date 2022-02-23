@@ -15,4 +15,4 @@ COPY ./lib /var/www/lib
 COPY ./templates /var/www/templates
 COPY ./vendor /var/www/vendor
 # Set hostname todo: error
-RUN sed -i '/#!/bin/sh/aecho "$(hostname -i)\t$(hostname) $(hostname).localhost" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
+# RUN sed -i '/#!/bin/sh/echo "$(hostname -i)\t$(hostname) $(hostname).localhost" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
