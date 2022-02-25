@@ -11,4 +11,15 @@ nav {
     background-color:  #aaaaaa;
   }
 */
+
+.ui-datepicker-year
+{
+  display: none;
+}
+
+span.form-sub-label-container.year, .calendar-new-year{
+
+    display: none;
+  
+  }
   
