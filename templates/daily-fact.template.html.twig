@@ -4,7 +4,7 @@
             <div class="card-body">
                 <h1 class="card-title d-flex justify-content-between align-items-center"><b id="firstFactDate"></b><button onclick="changeFact()" type="button" id="changeFact" class="btn btn-primary"><b>See alternate fact</b></button></h1>
                 <br/>
-                <b id="firstFact">
+                <b id="fact1">
                     {% if dailyFactInfo | first.fact %}
                         {{dailyFactInfo | first.fact}}
                     {% else %}
@@ -15,7 +15,7 @@
                 <br/>
                 <p class="card-link text-secondary">
                 {% if dailyFactInfo | first.link %}
-                    Click <a id="firstLink" href="{{dailyFactInfo | first.link}}" target="blank"><b>here</b></a> to learn more.
+                    Click <a id="link1" href="{{dailyFactInfo | first.link}}" target="blank"><b>here</b></a> to learn more.
                 {% else %}
                     Error: link not found.
                 {% endif %}
@@ -27,7 +27,7 @@
     </div>
 
     <div class="col align-self-start col-lg-12">
-        <a id="firstImage" href="{{dailyFactInfo | first.image}}" target="blank">
+        <a id="image1" href="{{dailyFactInfo | first.image}}" target="blank">
             <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image">
         </a>
     </div>
@@ -39,7 +39,7 @@
             <div class="card-body">
                 <h1 class="card-title d-flex justify-content-between align-items-center"><b id="lastFactDate"></b><button onclick="changeFact()" type="button" class="btn btn-primary"><b>See alternate fact</b></button></h1>
                 <br/>
-                <b id="secondFact">
+                <b id="fact2">
                     {% if dailyFactInfo | last.fact %}
                         {{dailyFactInfo | last.fact}}
                     {% else %}
@@ -50,7 +50,7 @@
                 <br/>
                 <p class="card-link text-secondary">
                 {% if dailyFactInfo | last.link %}
-                    Click <a id="secondLink" href="{{dailyFactInfo | last.link}}" target="blank"><b>here</b></a> to learn more.
+                    Click <a id="link2" href="{{dailyFactInfo | last.link}}" target="blank"><b>here</b></a> to learn more.
                 {% else %}
                     Error: link not found.
                 {% endif %}
@@ -62,7 +62,7 @@
     </div>
 
     <div class="col align-self-start col-lg-12">
-        <a id="secondImage" href="{{dailyFactInfo | last.image}}" target="blank">
+        <a id="image2" href="{{dailyFactInfo | last.image}}" target="blank">
             <img style="width: 500px; height:auto;" src="{{dailyFactInfo | last.image}}" class="border img-fluid" alt="associated image">
         </a>
     </div>
