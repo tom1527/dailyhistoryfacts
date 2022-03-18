@@ -50,8 +50,8 @@ if(isset($_GET['search'])){
     if($search){
         $searchTermExtractor = new SearchTermExtractor($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
         $searchTerms = $searchTermExtractor->extractSearchTerms();
-        $dataBaseSearcher = new DatabaseSearcher($searchTerms);
-        $results = $dataBaseSearcher->getSearchResults();
+        $dataBaseSearcher = new DatabaseSearcher();
+        $results = $dataBaseSearcher->getSearchResults($searchTerms);
         $totalResults = $dataBaseSearcher->countSearchResults();
         $totalPages = ceil($totalResults/$limitBy);
     } else {

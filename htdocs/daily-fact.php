@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
-$value[] = "";
 if(isset($_GET['day'])) {
     $currentDay = $_GET['day'];
 } else {
@@ -21,7 +20,7 @@ if(isset($_GET['month'])) {
     $currentMonth = "Error";
 }
 
-$databaseSearcher = new DatabaseSearcher($value);
+$databaseSearcher = new DatabaseSearcher();
 $dailyFactInfo = $databaseSearcher->returnDailyFact($currentDay, $currentMonth);
 
 

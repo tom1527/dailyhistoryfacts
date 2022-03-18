@@ -3,13 +3,8 @@
 <?php
 class DatabaseSearcher extends DataBaseConn {
 
-    public array $searchTerms; 
-
-    public function __construct(array $searchTerms) {
+    public function getSearchResults(array $searchTerms): array {
         $this->searchTerms = $searchTerms;
-    }
-
-    public function getSearchResults(): array {
         $searchTerms = $this->searchTerms;
         $this->sortBy = $searchTerms['sortBy'];
         $this->limit = $searchTerms['limitBy'];
