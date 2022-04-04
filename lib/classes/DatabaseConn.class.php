@@ -1,8 +1,6 @@
 <?php
     class DataBaseConn {
-        //private $host = "database-cluster.cluster-cb1bkopanp3s.eu-west-2.rds.amazonaws.com";
-        private $host = "db";
-
+        private $host = "database";
         private $user = "root";
         private $psw = "KgdS8Ilbf8J3";
         private $dbname = "interestingfacts";
