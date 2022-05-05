@@ -1,5 +1,5 @@
-<div id="first" class="row g-1 gy-3" style="">
-    <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
+<div id="first" class="visible row g-1 gy-3" style="">
+    <div class="col align-self-start col-lg-auto col-sm-12 fs-3">
         <div class="card bg-light">
             <div class="card-body">
                 <h1 class="card-title d-flex justify-content-between align-items-center"><b id="firstFactDate"></b><button onclick="changeFact()" type="button" id="changeFact" class="btn btn-primary"><b>See alternate fact</b></button></h1>
@@ -26,15 +26,15 @@
         </div>
     </div>
 
-    <div class="col align-self-start col-lg-12">
+    <div class="col align-self-start col-12 p-1">
         <a id="image1" href="{{dailyFactInfo | first.image}}" target="blank">
             <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image">
         </a>
     </div>
 </div>
 
-<div id="last" class="row g-1 gy-3" style="display: none;">
-    <div class="col align-self-start col-lg-auto col-sm-16 fs-3">
+<div id="last" class="hidden row g-1 gy-3" style="display: none;">
+    <div class="col align-self-start col-lg-auto col-sm-12 fs-3">
         <div class="card bg-light">
             <div class="card-body">
                 <h1 class="card-title d-flex justify-content-between align-items-center"><b id="lastFactDate"></b><button onclick="changeFact()" type="button" class="btn btn-primary"><b>See alternate fact</b></button></h1>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div class="col align-self-start col-lg-12">
+    <div class="col align-self-start col-12 p-1">
         <a id="image2" href="{{dailyFactInfo | last.image}}" target="blank">
             <img style="width: 500px; height:auto;" src="{{dailyFactInfo | last.image}}" class="border img-fluid" alt="associated image">
         </a>

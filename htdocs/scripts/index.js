@@ -57,31 +57,44 @@ function getFact(month, day) {
 function changeFact() {
     var first = document.getElementById("first");
     var last = document.getElementById("last");
-    if(first.style.display === "none") {
-        first.style.display = "block";
-    } else {
-        first.style.display = "none";
-    } 
-    if(last.style.display === "none") {
-        last.style.display = "block";
-    } else {
-        last.style.display = "none";
-    }
+    changeVisibility(first);
+    changeVisibility(last);
     document.getElementById("lastFactDate").innerHTML = factDate;
+} 
+
+function changeVisibility(element) {
+    if(element.style.display === "none") {
+        element.classList.add('visible');
+        element.classList.remove('hidden');
+        setTimeout(function() {
+            element.style.display = "block";
+        }, 500);
+    } else {
+        element.classList.add('hidden');
+        element.classList.remove('visible');
+        setTimeout(function() {
+            element.style.display = "none";
+        }, 500);
+    }
 }
 
 $(function() {
-    $('.DateTextBox.NoYear').datepicker({
+    $('.DateTextBox').datepicker({
         showAnim: "",
         dateFormat: 'MM/m/d',
         changeYear: false,
         onSelect: function(date) {
-            multipleDates = date.split("/");
-            const monthLong = multipleDates[0];
-            const month = multipleDates[1];
-            const day = multipleDates[2];
-            let url = "daily-fact.php?month=" + month + "&day=" + day;
-            setDate(monthLong, month, day);
+            var first = document.getElementById("first");
+            changeVisibility(first);
+            setTimeout(function() {
+                multipleDates = date.split("/");
+                const monthLong = multipleDates[0];
+                const month = multipleDates[1];
+                const day = multipleDates[2];
+                let url = "daily-fact.php?month=" + month + "&day=" + day;
+                setDate(monthLong, month, day);
+                changeVisibility(first);
+            }, 250);
         },
     });    
 });

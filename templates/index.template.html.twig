@@ -2,13 +2,13 @@
 
 {% block maincontent %}
 
-<div class="container-fluid row lg pt-4">
-    <div id="daily-fact" class="col">
+<div class="container-fluid row pt-4">
+    <div id="daily-fact" class="col col-lg-8 col-md-12 col-sm-12">
         <p>Loading Daily Fact...</p>
     </div>
 
-    <div class="col col-lg-3 fs-6">
-        <div class="card bg-light">
+    <div class="col col-lg-4 fs-6">
+        <div class="row card bg-light">
             <div class="card-body">
                 <h1 class="card-title">An Interesting Historical Fact</h1>
                 <p>This page displays an interesting fact that occurred on today's date sometime in the past. Although care has been taken to verify the information 
@@ -20,18 +20,22 @@
                 <h4 id="today" class="card-title"></h4>
             </div>
         </div>
-        <div class="row lg pt-4 ">
+        <div class="row pt-4 pb-5" stlye="display:inline-block;">
 
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all">
             <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
             <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
-            <div type="text" id="datepicker" class="DateTextBox NoYear col-sm-7"></div>
+            <div type="text" id="datepicker" class="DateTextBox datepicker-inline col mb-4"></div>
 
-            <div class="card bg-light col-sm-4">
+            <div class="card bg-light col-sm-6">
                 <div class="card-body">
                     <h5 class="card-title">Date Selector</h5>
-                    <p>You can pick a day from any month with this calander to view another day's interesting facts.</p>
+                    <p>
+                        You can pick a day from any month with this calander to view another day's interesting facts.
+                        <br>
+                        Some days may not be populated with results yet.
+                    </p>
                 </div>
             </div>
 

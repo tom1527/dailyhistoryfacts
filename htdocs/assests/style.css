@@ -12,6 +12,18 @@ nav {
   }
 */
 
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
 .ui-datepicker-year
 {
   display: none;
@@ -21,5 +33,12 @@ span.form-sub-label-container.year, .calendar-new-year{
 
     display: none;
   
-  }
+}
+
+.ui-datepicker {
+  width: 17em;
+margin-left:0; 
+margin-right:0;
+  padding: 0.2em 0.2em 0;
+}
   
