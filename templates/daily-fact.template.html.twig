@@ -8,7 +8,7 @@
                     {% if dailyFactInfo | first.fact %}
                         {{dailyFactInfo | first.fact}}
                     {% else %}
-                        Error: the entry for this date is most likely empty. This will be fixed as the website is updated.
+                        {{dailyFactInfo}}
                     {% endif %}
                 </b>
                 <br/>

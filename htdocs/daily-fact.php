@@ -8,20 +8,28 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
-if(isset($_GET['day'])) {
+$responseCode = 200;
+
+if(isset($_GET['day']) && false) {
     $currentDay = $_GET['day'];
 } else {
-    $currentDay = "Error";
+    $responseCode = 400;
+    $errorMessage = "Error code 400: Missing 'day' parameter from URL.";
 }
 
 if(isset($_GET['month'])) {
     $currentMonth = $_GET['month'];
 } else {
-    $currentMonth = "Error";
+    $responseCode = 400;
+    $errorMessage = "Error code 400: Missing 'month' parameter from URL.";
 }
 
-$databaseSearcher = new DatabaseSearcher();
-$dailyFactInfo = $databaseSearcher->returnDailyFact($currentDay, $currentMonth);
+if($responseCode == 200) {
+    $databaseSearcher = new DatabaseSearcher();
+    $dailyFactInfo = $databaseSearcher->returnDailyFact($currentDay, $currentMonth);
+} else {
+    $dailyFactInfo = $errorMessage;
+}
 
 
 echo $twig->render('daily-fact.template.html.twig', [
