@@ -5,7 +5,6 @@ class DatabaseSearcher extends DataBaseConn {
 
     public function getSearchResults(array $searchTerms): array {
         $this->searchTerms = $searchTerms;
-        $searchTerms = $this->searchTerms;
         $this->sortBy = $searchTerms['sortBy'];
         $this->limit = $searchTerms['limitBy'];
         $this->offset = $searchTerms['offset'];
