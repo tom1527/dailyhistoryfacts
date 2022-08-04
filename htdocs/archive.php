@@ -51,7 +51,17 @@ if(isset($_GET['search'])){
         $searchTermExtractor = new SearchTermExtractor($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
         $searchTerms = $searchTermExtractor->extractSearchTerms();
         $dataBaseSearcher = new DatabaseSearcher();
-        $results = $dataBaseSearcher->getSearchResults($searchTerms);
+        try {
+            $results = $dataBaseSearcher->getSearchResults($searchTerms);
+        } catch(DatabaseConnectionException $Exception) {
+            http_response_code(500);
+            $error = "Sorry, the archive is not available right now.";
+            echo $twig->render('archive.template.html.twig', [
+                'page' => 'Archive',
+                'error' => $error
+            ]);
+            die;
+        }
         $totalResults = $dataBaseSearcher->countSearchResults();
         $totalPages = ceil($totalResults/$limitBy);
     } else {

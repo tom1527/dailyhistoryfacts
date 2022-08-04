@@ -10,9 +10,15 @@ function setDate(monthLong, month, day){
 
     nth = setOrdinals(day);
 
-    today = "Today's date is: " + monthLong + " " + day + nth;
-    document.getElementById("today").innerHTML = today;
-    factDate = "On " + monthLong + " " + day + nth + " in the past... ";
+    if(monthLong && day && nth) {
+        today = "Today's date is: " + monthLong + " " + day + nth;
+        document.getElementById("today").innerHTML = today;
+        factDate = "On " + monthLong + " " + day + nth + " in the past... ";
+    } else {
+        const dateErrorMessage = "Today's date is: Error - we couldn't read your date.";
+        document.getElementById("today").innerHTML = dateErrorMessage;
+    }
+    
     getFact(month, day);
 }
 
@@ -45,13 +51,17 @@ function getFact(month, day) {
     
     let div=document.getElementById("daily-fact");
     
-    fetch(dailyFactDate)
-        .then(response => response.text())
-        .then(html =>  {
+        console.log("Loading fact...");
+    fetch(dailyFactDate).then((response) => {
+        console.log(response.status);
+        // if(response.status == 200) {
+        response.text().then(html => {
             div.innerHTML = html;
-            document.getElementById("firstFactDate").innerHTML = factDate;
-        } 
-    );
+            if(response.status == 200) {
+                document.getElementById("firstFactDate").innerHTML = factDate;
+            } 
+        })
+    });
 }
 
 function changeFact() {

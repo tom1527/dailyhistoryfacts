@@ -43,6 +43,8 @@
         </form>
     </div>
 
+    {% endif %}
+
     {% if searchTerms.searchTerm is defined %}
 
     <div class="m-3">
@@ -58,26 +60,30 @@
     {% endif %}
 
     <div class="container-fluid">
-        <div>
-            {% for result in results %}
-                <p class="text-secondary">Result: {{loop.index}}
-                <div class="card-body bg-light border-top border-3 border-bottom mb-5">
-                    <h4 class="card-title fs-4">{{result.day}}/{{result.month}}</h4>
-                    <p class="card-title fs-4">{{result.fact}}</p>
-                    {% if result.link %}
-                        <p class="card-link text-secondary fs-5">Click <a href='{{result.link}}' target='blank'>here</a> to learn more about this event</p>
-                    {% endif %}
-                    {% if result.image %}
-                        <a href="{{result.image}}" target="blank">
-                            <img src='{{result.image}}' alt='associated image' class="mb-3" style='width: auto;height: 200px'>
-                        </a>
-                    {% endif %}
-                </div>    
-            {% endfor %}
-        </div>
+        {% if results %}
+            <div>
+                {% for result in results %}
+                    <p class="text-secondary">Result: {{loop.index}}
+                    <div class="card-body bg-light border-top border-3 border-bottom mb-5">
+                        <h4 class="card-title fs-4">{{result.day}}/{{result.month}}</h4>
+                        <p class="card-title fs-4">{{result.fact}}</p>
+                        {% if result.link %}
+                            <p class="card-link text-secondary fs-5">Click <a href='{{result.link}}' target='blank'>here</a> to learn more about this event</p>
+                        {% endif %}
+                        {% if result.image %}
+                            <a href="{{result.image}}" target="blank">
+                                <img src='{{result.image}}' alt='associated image' class="mb-3" style='width: auto;height: 200px'>
+                            </a>
+                        {% endif %}
+                    </div>    
+                {% endfor %}
+            </div>
+        {% elseif error %}
+            <div class="alert alert-danger" style="display: inline-block;">
+                <span style="font-weight: bold; ">{{ error }}</span>
+            </div>
+        {% endif %}
     </div>
-
-    {% endif %}
 
     {% if searchTerms.searchTerm %}
 
