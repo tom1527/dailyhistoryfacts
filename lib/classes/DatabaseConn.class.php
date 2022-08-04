@@ -1,4 +1,6 @@
 <?php
+require_once '../vendor/autoload.php';
+use DatabaseConnectionException;
     class DataBaseConn {
         protected function connect(): PDO {
             $host = getEnv('ENVIRONMENT') == 'LIVE' ? "127.0.0.1" : 'database';
@@ -7,7 +9,11 @@
             $dbname = "interestingfacts";
 
             $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-            $pdo = new PDO($dsn, $user, $psw);
+            try {
+                $pdo = new PDO($dsn, $user, $psw);
+            } catch (PDOException $Exception) {
+                throw new DatabaseConnectionException($Exception->getMessage());
+            }
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             return $pdo;
         }
