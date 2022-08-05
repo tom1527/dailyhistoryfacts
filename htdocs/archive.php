@@ -8,23 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
-if(isset($_GET['search'])){
-    $searchBarValue = (string) $_GET['search'];
-} else {
-    $searchBarValue = "";
-}
+$searchBarValue = isset($_GET['search']) ? $_GET['search'] : "";
 
-if(isset($_GET['sortBy'])) {
-    $sortBy = (string) $_GET['sortBy'];
-} else {
-    $sortBy="";
-}
-
-if(isset($_GET['pageNo'])) {
-    $pageNo = (int) $_GET['pageNo'];
-} else {
-    $pageNo="";
-}
+$sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : "";
 
 $sortByValues = [
     ['option' => '---', 'label' => '---'],
@@ -32,11 +18,9 @@ $sortByValues = [
     ['option' => 'dateDES', 'label' => 'Date Descending'] 
 ];
 
-if(isset($_GET['limitBy'])) {
-    $limitBy = $_GET['limitBy'];
-} else {
-    $limitBy = "";
-}
+$pageNo = isset($_GET['pageNo']) ? $_GET['pageNo'] : "";
+
+$limitBy = isset($_GET['limitBy']) ? $_GET['limitBy'] : "";
 
 $limitByValues = [
     ['option' => '5'],
@@ -45,37 +29,24 @@ $limitByValues = [
     ['option' => '20']
 ];
 
-if(isset($_GET['search'])){
-    $search = $_GET['search'];
-    if($search){
-        $searchTermExtractor = new SearchTermExtractor($_GET['search'], $_GET['sortBy'], $_GET['pageNo'], $_GET['limitBy']);
-        $searchTerms = $searchTermExtractor->extractSearchTerms();
-        $dataBaseSearcher = new DatabaseSearcher();
-        try {
-            $results = $dataBaseSearcher->getSearchResults($searchTerms);
-        } catch(DatabaseConnectionException $Exception) {
-            http_response_code(500);
-            $error = "Sorry, the archive is not available right now.";
-            echo $twig->render('archive.template.html.twig', [
-                'page' => 'Archive',
-                'error' => $error
-            ]);
-            die;
-        }
-        $totalResults = $dataBaseSearcher->countSearchResults();
-        $totalPages = ceil($totalResults/$limitBy);
-    } else {
-        $searchTerms = "";
-        $totalResults = "";
-        $results = "";
-        $totalPages = "";
+if($searchBarValue){
+    $searchTermExtractor = new SearchTermExtractor($searchBarValue, $sortBy, $pageNo, $limitBy);
+    $searchTerms = $searchTermExtractor->extractSearchTerms();
+    $dataBaseSearcher = new DatabaseSearcher();
+    try {
+        $results = $dataBaseSearcher->getSearchResults($searchTerms);
+    } catch(DatabaseConnectionException $Exception) {
+        http_response_code(500);
+        $error = "Sorry, the archive is not available right now.";
+        echo $twig->render('archive.template.html.twig', [
+            'page' => 'Archive',
+            'error' => $error
+        ]);
+        die;
     }
-} else {
-    $searchTerms = "";
-    $totalResults = "";
-    $results = "";
-    $totalPages = "";
-}
+    $totalResults = $dataBaseSearcher->countSearchResults();
+    $totalPages = ceil($totalResults/$limitBy);
+} 
 
 echo $twig->render('archive.template.html.twig', [
     'page' => 'Archive',
