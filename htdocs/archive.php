@@ -1,9 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
-
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-
 $loader = new FilesystemLoader('../templates');
 $twig = new Environment($loader);
 
@@ -29,12 +27,11 @@ $limitByValues = [
 ];
 
 if($searchBarValue){
-    $searchTermExtractor = new SearchTermExtractor($searchBarValue, $sortBy, $pageNo, $limitBy);
-    $searchTerms = $searchTermExtractor->extractSearchTerms();
+    $searchTerms = SearchTermExtractor::extractSearchTerms($searchBarValue, $sortBy, $pageNo, $limitBy);
     $dataBaseSearcher = new DatabaseSearcher();
     try {
         $results = $dataBaseSearcher->getSearchResults($searchTerms);
-    } catch(DatabaseConnectionException $Exception) {
+    } catch(DatabaseConnectionException $exception) {
         http_response_code(500);
         $error = "Sorry, the archive is not available right now.";
         echo $twig->render('archive.template.html.twig', [

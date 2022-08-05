@@ -2,9 +2,9 @@
 header("Content-Type:application/json");
 require_once '../vendor/autoload.php';
 
-$search = $_GET['search'];
-$day = $_GET['day'];
-$month = $_GET['month'];
+$search = isset($_GET['search']) ? $_GET['search'] : null;
+$day = isset($_GET['day']) ? $_GET['day'] : null;
+$month = isset($_GET['month']) ? $_GET['month'] : null;
 
 $factInfo = setJSONResponse($search, $day, $month);
 ob_clean();
@@ -18,16 +18,13 @@ if(empty($factInfo)) {
 
 function setJSONResponse($search, $day, $month) {
     if($search){
-        $searchTermExtractor = new SearchTermExtractor($search, '---', 1, 10);
-        $searchTerms = $searchTermExtractor->extractSearchTerms();
-        $dataBaseSearcher = new DatabaseSearcher();
-        $results = $dataBaseSearcher->getSearchResults($searchTerms);
+        $searchTerms = SearchTermExtractor::extractSearchTerms($search, '---', 1, 10);
+        $results = DatabaseSearcher::getSearchResults($searchTerms);
         return $results;
     }
 
     if($day && $month) {
-        $databaseSearcher = new DatabaseSearcher();
-        $dailyFactInfo = $databaseSearcher->returnDailyFact($day, $month);
+        $results = DatabaseSearcher::getSearchResults($day, $month);
         return $dailyFactInfo;
     }
 }

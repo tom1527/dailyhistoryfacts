@@ -1,28 +1,28 @@
 <!DOCTYPE HTML>
 
 <?php
-class DatabaseSearcher extends DataBaseConn {
+class DatabaseSearcher {
 
-    public function getSearchResults(array $searchTerms): array {
-        $this->searchTerms = $searchTerms;
-        $this->sortBy = $searchTerms['sortBy'];
-        $this->limit = $searchTerms['limitBy'];
-        $this->offset = $searchTerms['offset'];
+    public static function getSearchResults(array $searchTerms): array {
+        $searchTerms = $searchTerms;
+        $sortBy = $searchTerms['sortBy'];
+        $limit = $searchTerms['limitBy'];
+        $offset = $searchTerms['offset'];
  
-        switch($this->sortBy){
+        switch($sortBy){
             case "dateASC":
-                $this->sortBy = "`month` ASC, `day` ASC";
+                $sortBy = "`month` ASC, `day` ASC";
                 break;
             case "dateDES":
-                $this->sortBy = "`month` DESC, `day` DESC";
+                $sortBy = "`month` DESC, `day` DESC";
                 break;
             case "---":
-                $this->sortBy = "NULL";
+                $sortBy = "NULL";
                 break;
         }
 
-        $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') ORDER BY $this->sortBy Limit $this->limit OFFSET $this->offset";
-        $stmt = $this->connect()->prepare($sql);
+        $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') ORDER BY $sortBy Limit $limit OFFSET $offset";
+        $stmt = DataBaseConn::connect()->prepare($sql);
         $stmt->bindValue(':searchTerm', $searchTerms['searchTerm']);
         $stmt->execute();
 
@@ -30,10 +30,10 @@ class DatabaseSearcher extends DataBaseConn {
         return $results;        
     }
 
-    public function countSearchResults(): int {
-        $searchTerms = $this->searchTerms;
+    public static function countSearchResults(): int {
+        $searchTerms = $searchTerms;
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', ?, '%')";
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = DataBaseConn::connect()->prepare($sql);
         $stmt->execute([$searchTerms['searchTerm']]);
         
         $results = $stmt->fetchAll();
@@ -41,7 +41,7 @@ class DatabaseSearcher extends DataBaseConn {
         return $totalNumberOfSearchResults;
     }
 
-    public function returnDailyFact($currentDay, $currentMonth): array {
+    public static function returnDailyFact($currentDay, $currentMonth): array {
 
         if(strlen($currentDay) == 1) {
             $currentDay = "0".$currentDay;
@@ -52,7 +52,7 @@ class DatabaseSearcher extends DataBaseConn {
         }
 
         $sql = "SELECT * FROM facts WHERE day = '$currentDay' && month = '$currentMonth' ORDER BY RAND()";
-        $stmt = $this->connect()->prepare($sql);
+        $stmt = DataBaseConn::connect()->prepare($sql);
         $stmt->execute();
 
         $results = $stmt->fetchAll();
