@@ -1,7 +1,7 @@
 <?php
-require_once '../vendor/autoload.php';
+// require_once '../vendor/autoload.php';
 // use DatabaseConnectionException;
-    class DataBaseConn {
+    class DatabaseConn {
         public static function connect(): PDO {
             $host = getEnv('ENVIRONMENT') == 'LIVE' ? "127.0.0.1" : 'database';
             $user = "root";

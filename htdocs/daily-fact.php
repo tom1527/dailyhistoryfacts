@@ -17,7 +17,8 @@ if (empty($_GET['day'])) {
     $errorTitle = 'Sorry, we couldn\'t load a fact.';
     $errorDescription = "Error: request missing 'month' parameter.";
 } else {
-    $databaseSearcher = new DatabaseSearcher();
+    $pdo = DatabaseConn::connect();
+    $databaseSearcher = new DatabaseSearcher($pdo);
     $dailyFactInfo = $databaseSearcher->returnDailyFact($_GET['day'], $_GET['month']);
     if (empty($dailyFactInfo)) {
         $errorDescription = "Error: the entry for this date is most likely empty. This will be fixed as the website is updated.";

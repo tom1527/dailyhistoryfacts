@@ -2,9 +2,12 @@
 
 <?php
 class DatabaseSearcher {
+    private PDO $pdo;
+    public function __construct(PDO $pdo) {
+        $this->pdo = $pdo;
+    }
 
-    public static function getSearchResults(array $searchTerms): array {
-        $searchTerms = $searchTerms;
+    public function getSearchResults(array $searchTerms): array {
         $sortBy = $searchTerms['sortBy'];
         $limit = $searchTerms['limitBy'];
         $offset = $searchTerms['offset'];
@@ -22,7 +25,8 @@ class DatabaseSearcher {
         }
 
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') ORDER BY $sortBy Limit $limit OFFSET $offset";
-        $stmt = DataBaseConn::connect()->prepare($sql);
+        // $stmt = DatabaseConn::connect()->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':searchTerm', $searchTerms['searchTerm']);
         $stmt->execute();
 
@@ -30,10 +34,10 @@ class DatabaseSearcher {
         return $results;        
     }
 
-    public static function countSearchResults(): int {
-        $searchTerms = $searchTerms;
+    public function countSearchResults(array $searchTerms): int {
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', ?, '%')";
-        $stmt = DataBaseConn::connect()->prepare($sql);
+        // $stmt = DatabaseConn::connect()->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$searchTerms['searchTerm']]);
         
         $results = $stmt->fetchAll();
@@ -41,7 +45,7 @@ class DatabaseSearcher {
         return $totalNumberOfSearchResults;
     }
 
-    public static function returnDailyFact($currentDay, $currentMonth): array {
+    public function returnDailyFact($currentDay, $currentMonth): array {
 
         if(strlen($currentDay) == 1) {
             $currentDay = "0".$currentDay;
@@ -52,7 +56,8 @@ class DatabaseSearcher {
         }
 
         $sql = "SELECT * FROM facts WHERE day = '$currentDay' && month = '$currentMonth' ORDER BY RAND()";
-        $stmt = DataBaseConn::connect()->prepare($sql);
+        // $stmt = DatabaseConn::connect()->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
         $results = $stmt->fetchAll();

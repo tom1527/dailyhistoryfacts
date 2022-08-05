@@ -28,9 +28,8 @@ $limitByValues = [
 
 if($searchBarValue){
     $searchTerms = SearchTermExtractor::extractSearchTerms($searchBarValue, $sortBy, $pageNo, $limitBy);
-    $dataBaseSearcher = new DatabaseSearcher();
     try {
-        $results = $dataBaseSearcher->getSearchResults($searchTerms);
+        $pdo = DatabaseConn::connect();
     } catch(DatabaseConnectionException $exception) {
         http_response_code(500);
         $error = "Sorry, the archive is not available right now.";
@@ -40,7 +39,9 @@ if($searchBarValue){
         ]);
         die;
     }
-    $totalResults = $dataBaseSearcher->countSearchResults();
+    $dataBaseSearcher = new DatabaseSearcher($pdo);
+    $results = $dataBaseSearcher->getSearchResults($searchTerms);
+    $totalResults = $dataBaseSearcher->countSearchResults($searchTerms);
     $totalPages = ceil($totalResults/$limitBy);
 } 
 
