@@ -41,6 +41,7 @@ if($searchBarValue){
     }
     $dataBaseSearcher = new DatabaseSearcher($pdo);
     $results = $dataBaseSearcher->getSearchResults($searchTerms);
+    $resultCountSoFar = ($pageNo - 1) * $limitBy;
     $totalResults = $dataBaseSearcher->countSearchResults($searchTerms);
     $totalPages = ceil($totalResults/$limitBy);
 } 
@@ -55,6 +56,7 @@ echo $twig->render('archive.template.html.twig', [
     'limitByValues' => $limitByValues,
     'searchTerms' => $searchTerms,
     'totalResults' => $totalResults,
+    'resultCountSoFar' => $resultCountSoFar,
     'totalPages' => $totalPages,
     'results' => $results,
 ]);

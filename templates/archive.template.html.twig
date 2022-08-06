@@ -63,7 +63,7 @@
         {% if results %}
             <div>
                 {% for result in results %}
-                    <p class="text-secondary">Result: {{loop.index}}
+                    <p class="text-secondary">Result: {{resultCountSoFar + loop.index}}
                     <div class="card-body bg-light border-top border-3 border-bottom mb-5">
                         <h4 class="card-title fs-4">{{result.day}}/{{result.month}}</h4>
                         <p class="card-title fs-4">{{result.fact}}</p>
