@@ -1,17 +1,21 @@
 setDate();
 
 function setDate(monthLong, month, day){
+    var date = new Date();
     if(!month || !day){
-        var date = new Date();
         var month = date.getMonth() + 1;
         var monthLong = date.toLocaleString('default', { month: 'long' });
         var day = date.getDate();
     } 
 
+    const systemDay = date.getDate();
+    const systemMonthLong = date.toLocaleString('default', { month: 'long' });
+
+    systemDayNth = setOrdinals(systemDay);
     nth = setOrdinals(day);
 
     if(monthLong && day && nth) {
-        today = "Today's date is: " + monthLong + " " + day + nth;
+        today = "Today's date is: " + systemMonthLong + " " + systemDay + systemDayNth;
         document.getElementById("today").innerHTML = today;
         factDate = "On " + monthLong + " " + day + nth + " in the past... ";
     } else {
