@@ -104,25 +104,6 @@ function makeFallbackRequest(day, month) {
 
                     fact.parentNode.appendChild(div.cloneNode(true));
                 }
-                /* const fact1 = document.getElementById("fact1");
-                const fact2 = document.getElementById("fact2");
-
-                fact1.innerHTML = `In ${result.year}, ${result.teaser}`;
-                fact1.parentNode.querySelector('.card-link').innerHTML = `Click <a id="link1" href=${result.link} target="blank"><b>here</b></a> to learn more.`;
-
-                const image1 = document.getElementById('image1'); 
-                image1.setAttribute('href', result.image);
-                image1.firstElementChild.setAttribute('src', result.image);
-
-                const warningDiv = document.createElement("span")
-                warningDiv.innerHTML = 'Alert: this is not a curated fact like you might see on other days. As a fact hasn\'t been chosen for today, a random one has been selected. Therefore, the quality or relevance of today\'s fact may seem off.';
-                warningDiv.style.fontWeight = 'bold';
-                const div = document.createElement("div");
-                div.classList.add("alert", "alert-danger");
-                div.appendChild(warningDiv);
-
-                fact1.parentNode.appendChild(div);
-                fact2.parentNode.appendChild(div.cloneNode(true)); */
             });
         }
     });
@@ -194,6 +175,7 @@ $(function() {
                 setDate(monthLong, month, day);
                 changeVisibility(first);
             }, 250);
+            window.scrollTo(0, 0);
         },
     });    
 });
