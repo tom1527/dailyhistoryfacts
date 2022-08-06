@@ -21,6 +21,7 @@ if (empty($_GET['day'])) {
     $databaseSearcher = new DatabaseSearcher($pdo);
     $dailyFactInfo = $databaseSearcher->returnDailyFact($_GET['day'], $_GET['month']);
     if (empty($dailyFactInfo)) {
+        http_response_code(404);
         $errorDescription = "Error: the entry for this date is most likely empty. This will be fixed as the website is updated.";
     }
     echo $twig->render('daily-fact.template.html.twig', [

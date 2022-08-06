@@ -26,14 +26,19 @@
                 </p>
             </div>
         </div>
-        <div class="card bg-light">
-        </div>
+
     </div>
 
     {% if dailyFactInfo | first.image %}
         <div class="col align-self-start col-12 p-1">
             <a id="image1" href="{{dailyFactInfo | first.image}}" target="blank">
-                <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image">
+                <img style="width: 500px; height:auto;" src="{{dailyFactInfo | first.image}}" class="border img-fluid" alt="associated image"></img>
+            </a>
+        </div>
+    {% else %}
+        <div class="col align-self-start col-12 p-1">
+            <a id="image1" href="" target="blank">
+                <img style="width: 500px; height:auto;" src="" class="border img-fluid" alt="associated image"></img>
             </a>
         </div>
     {% endif %}
@@ -75,6 +80,12 @@
         <div class="col align-self-start col-12 p-1">
             <a id="image2" href="{{dailyFactInfo | last.image}}" target="blank">
                 <img style="width: 500px; height:auto;" src="{{dailyFactInfo | last.image}}" class="border img-fluid" alt="associated image">
+            </a>
+        </div>
+    {% else %}
+        <div class="col align-self-start col-12 p-1">
+            <a id="image2" href="" target="blank">
+                <img style="width: 500px; height:auto;" src="" class="border img-fluid" alt="associated image"></img>
             </a>
         </div>
     {% endif %}
