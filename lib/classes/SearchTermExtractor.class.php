@@ -5,19 +5,12 @@ class SearchTermExtractor {
     private int $pageNo;
     private string $limitBy;
 
-    public function __construct(string $searchTerm, string $sortBy, int $pageNo, int $limitBy) {
-        $this->searchTerm = $searchTerm;
-        $this->sortBy = $sortBy;
-        $this->pageNo = $pageNo;
-        $this->limitBy = $limitBy;
-    }
-
-    public function extractSearchTerms(): array {
+    public static function extractSearchTerms(string $searchTerm, string $sortBy, int $pageNo, int $limitBy): array {
         
-        $this->offset = ($this->pageNo - 1) * $this->limitBy;
+        $offset = ($pageNo - 1) * $limitBy;
         
         $searchTerms = array();
-        $searchTerms += ["searchTerm" => $this->searchTerm, "sortBy" => $this->sortBy, "limitBy" => $this->limitBy, "offset" => $this->offset];
+        $searchTerms += ["searchTerm" => $searchTerm, "sortBy" => $sortBy, "limitBy" => $limitBy, "offset" => $offset];
         return $searchTerms;
     }
 
