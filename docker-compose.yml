@@ -10,7 +10,9 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www/
-
+    environment:
+      MYSQL_ROOT_PASSWORD: KgdS8Ilbf8J3
+      
   database:
     image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password

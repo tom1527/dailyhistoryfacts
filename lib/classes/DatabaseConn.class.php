@@ -3,6 +3,7 @@
 // use DatabaseConnectionException;
     class DatabaseConn {
         public static function connect(): PDO {
+            $psw = getenv("MYSQL_ROOT_PASSWORD");
             $host = getEnv('ENVIRONMENT') == 'LIVE' ? "127.0.0.1" : 'database';
             $user = "root";
             $psw = "KgdS8Ilbf8J3";
