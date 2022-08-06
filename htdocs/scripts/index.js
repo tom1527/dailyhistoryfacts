@@ -57,11 +57,100 @@ function getFact(month, day) {
         // if(response.status == 200) {
         response.text().then(html => {
             div.innerHTML = html;
-            if(response.status == 200) {
+            if(response.status != 400) {
                 document.getElementById("firstFactDate").innerHTML = factDate;
             } 
+            if(response.status == 404) {
+                makeFallbackRequest(day, month);
+            }
         })
     });
+}
+
+function makeFallbackRequest(day, month) {
+    let url = `https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${month}/${day}`
+    const dailyFactDate = new Request(url, {
+        // credentials: 'include',
+        type: 'GET',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        cache: 'default',
+    });
+    fetch(dailyFactDate).then((response) => {
+        console.log(response.status);
+        if(response.status == 200) {
+            response.json().then((factList)=>{
+                const results = selectFallbackFacts(factList);
+                for(i = 0; i < results.length; i++) {
+                    const result = results[i];
+                    const fact = document.getElementById(`fact${i+1}`);
+
+                    fact.innerHTML = `In ${result.year}, ${result.teaser}`;
+                    fact.parentNode.querySelector('.card-link').innerHTML = `Click <a id="link${i}" href=${result.link} target="blank"><b>here</b></a> to learn more.`;
+
+                    const image = document.getElementById(`image${i+1}`);
+                    image.setAttribute('href', result.image);
+                    image.firstElementChild.setAttribute('src', result.image);
+
+                    const warningDiv = document.createElement("span")
+                    warningDiv.innerHTML = 'Alert: this is not a curated fact like you might see on other days. As a fact hasn\'t been chosen for today, a random one has been selected. Therefore, the quality or relevance of today\'s fact may seem off.';
+                    warningDiv.style.fontWeight = 'bold';
+                    const div = document.createElement("div");
+                    div.classList.add("alert", "alert-danger");
+                    div.appendChild(warningDiv);
+
+                    fact.parentNode.appendChild(div.cloneNode(true));
+                }
+                /* const fact1 = document.getElementById("fact1");
+                const fact2 = document.getElementById("fact2");
+
+                fact1.innerHTML = `In ${result.year}, ${result.teaser}`;
+                fact1.parentNode.querySelector('.card-link').innerHTML = `Click <a id="link1" href=${result.link} target="blank"><b>here</b></a> to learn more.`;
+
+                const image1 = document.getElementById('image1'); 
+                image1.setAttribute('href', result.image);
+                image1.firstElementChild.setAttribute('src', result.image);
+
+                const warningDiv = document.createElement("span")
+                warningDiv.innerHTML = 'Alert: this is not a curated fact like you might see on other days. As a fact hasn\'t been chosen for today, a random one has been selected. Therefore, the quality or relevance of today\'s fact may seem off.';
+                warningDiv.style.fontWeight = 'bold';
+                const div = document.createElement("div");
+                div.classList.add("alert", "alert-danger");
+                div.appendChild(warningDiv);
+
+                fact1.parentNode.appendChild(div);
+                fact2.parentNode.appendChild(div.cloneNode(true)); */
+            });
+        }
+    });
+}
+
+function selectFallbackFacts(factList) {
+    const facts = factList.events
+    var results = [];
+    for(var fact in facts) {
+        if(results.length == 2) { break; }
+        if(!facts[fact].year || facts[fact].year > 1945) {
+            continue;
+        } else if(!facts[fact].pages) {
+            continue;
+        } else if(!facts[fact].text || !facts[fact].pages[0].extract_html) {
+            continue
+        } else {
+            const result = {
+                teaser: facts[fact].text,
+                year: facts[fact].year,
+                extract: facts[fact].pages[0].extract_html,
+                link: facts[fact].pages[0].content_urls.desktop.page,
+                ...(facts[fact].pages[0].originalimage) && {image: facts[fact].pages[0].originalimage.source}
+            }
+            results.push(result);
+        }
+    } 
+    return results;
 }
 
 function changeFact() {
