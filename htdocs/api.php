@@ -17,14 +17,25 @@ if(empty($factInfo)) {
 }
 
 function setJSONResponse($search, $day, $month) {
+    try {
+        $pdo = DatabaseConn::connect();
+    } catch(DatabaseConnectionException $exception) {
+        http_response_code(500);
+        $error = "Sorry, this API is not available right now.";
+        echo $error;
+        die;
+    }
+
     if($search){
         $searchTerms = SearchTermExtractor::extractSearchTerms($search, '---', 1, 10);
-        $results = DatabaseSearcher::getSearchResults($searchTerms);
+        $databaseSearcher = new DatabaseSearcher($pdo);
+        $results = $databaseSearcher->getSearchResults($searchTerms);
         return $results;
     }
 
     if($day && $month) {
-        $results = DatabaseSearcher::getSearchResults($day, $month);
+        $databaseSearcher = new DatabaseSearcher($pdo);
+        $dailyFactInfo = $databaseSearcher->returnDailyFact($day, $month);
         return $dailyFactInfo;
     }
 }
