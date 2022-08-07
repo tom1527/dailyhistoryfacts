@@ -106,11 +106,41 @@ function makeFallbackRequest(day, month) {
                     div.classList.add("alert", "alert-danger");
                     div.appendChild(warningDiv);
 
+                    if(result.extract) {
+                        var extractDiv = document.createElement("div");
+                        fact.after(extractDiv);
+                        var extractButton = document.createElement("button");
+                        var extractSpan = document.createElement("span"); 
+                        extractDiv.appendChild(extractSpan);
+                        extractButton.innerText = "Expand";
+                        extractButton.addEventListener('click', function(e){
+                            if(document.getElementById("extractSpan").style.display == "none") {
+                                e.currentTarget.innerText = "Collapse";
+                                document.getElementById("extractSpan").style.display = "block";
+                            } else {
+                                e.currentTarget.innerText = "Expand";
+                                document.getElementById("extractSpan").style.display = "none";
+                            }
+                        } );
+                        extractSpan.id = "extractSpan";
+                        extractSpan.innerHTML = result.extract;
+                        extractSpan.style.display = "none";
+
+                        extractDiv.appendChild(extractButton);
+                       
+
+                        
+                    }
+
                     fact.parentNode.appendChild(div.cloneNode(true));
                 }
             });
         }
     });
+}
+
+function revealExtract() {
+    document.getElementById("extractSpan").style.display = "block";
 }
 
 function selectFallbackFacts(factList) {
