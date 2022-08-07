@@ -3,7 +3,7 @@ class SearchTermExtractor {
     private string $searchTerm;
     private string $sortBy;
     private int $pageNo;
-    private string $limitBy;
+    private int $limitBy;
 
     public static function extractSearchTerms(string $searchTerm, string $sortBy, int $pageNo, int $limitBy): array {
         
