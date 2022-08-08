@@ -1,5 +1,3 @@
-<!DOCTYPE HTML>
-
 <?php
 class DatabaseSearcher {
     private PDO $pdo;
@@ -14,18 +12,29 @@ class DatabaseSearcher {
  
         switch($sortBy){
             case "dateASC":
-                $sortBy = "`month` ASC, `day` ASC";
+                $sortBy = "ORDER BY `month` ASC, `day` ASC";
                 break;
             case "dateDES":
-                $sortBy = "`month` DESC, `day` DESC";
+                $sortBy = "ORDER BY `month` DESC, `day` DESC";
                 break;
-            case "---":
-                $sortBy = "NULL";
+            default:
+                $sortBy = null;
                 break;
         }
 
-        $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') ORDER BY $sortBy Limit $limit OFFSET $offset";
-        // $stmt = DatabaseConn::connect()->prepare($sql);
+        if($limit != null) {
+            $limitBySQLClause = "LIMIT $limit";
+        } else {
+            $limitBySQLClause = "";
+        }
+
+        if($offset != null) {
+            $offsetSQLClause = "OFFSET $offset";
+        } else {
+            $offsetSQLClause = "";
+        }
+
+        $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') $sortBy $limitBySQLClause $offsetSQLClause";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':searchTerm', $searchTerms['searchTerm']);
         $stmt->execute();
@@ -36,7 +45,6 @@ class DatabaseSearcher {
 
     public function countSearchResults(array $searchTerms): int {
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', ?, '%')";
-        // $stmt = DatabaseConn::connect()->prepare($sql);
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$searchTerms['searchTerm']]);
         
@@ -56,7 +64,6 @@ class DatabaseSearcher {
         }
 
         $sql = "SELECT * FROM facts WHERE day = '$currentDay' && month = '$currentMonth' ORDER BY RAND()";
-        // $stmt = DatabaseConn::connect()->prepare($sql);
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
