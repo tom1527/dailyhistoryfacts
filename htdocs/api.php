@@ -1,43 +1,44 @@
 <?php
-header("Content-Type:application/json");
 require_once '../vendor/autoload.php';
 
-$search = isset($_GET['search']) ? $_GET['search'] : null;
-$day = isset($_GET['day']) ? $_GET['day'] : null;
-$month = isset($_GET['month']) ? $_GET['month'] : null;
+$searchTerm = $_GET['search'] ?? null;
+$day = $_GET['day'] ?? null;
+$month = $_GET['month'] ?? null;
 
-$factInfo = setJSONResponse($search, $day, $month);
-ob_clean();
+try {
+    $pdo = DatabaseConn::connect();
+} catch(DatabaseConnectionException $exception) {
+    http_response_code(500);
+    echo "Sorry, this API is not available right now.";
+    die;
+}
+
+if($searchTerm != null) {
+    $factInfo = searchDataBaseBySearchTerm($searchTerm, $pdo);
+} else if($day != null && $month != null) {
+    $factInfo = searchDataBaseByDate($day, $month, $pdo);
+} else {
+    http_response_code(400);
+    echo "Please specify a search term, or a day and a month.";
+    die;
+}
 
 if(empty($factInfo)) {
     echo "No results matching those terms.";
 } else { 
-    $json_response = json_encode($factInfo); 
-    echo $json_response;
+    header("Content-Type:application/json");
+    echo json_encode($factInfo); 
 }
 
-function setJSONResponse($search, $day, $month) {
-    try {
-        $pdo = DatabaseConn::connect();
-    } catch(DatabaseConnectionException $exception) {
-        http_response_code(500);
-        $error = "Sorry, this API is not available right now.";
-        echo $error;
-        die;
-    }
+function searchDataBaseBySearchTerm(string $searchTerm, $pdo) {
+    $searchArray = ["searchTerm" => $searchTerm, "sortBy" => null, "limitBy" => 10, "offset" => null];
+    $databaseSearcher = new DatabaseSearcher($pdo);
+    return $databaseSearcher->getSearchResults($searchArray);
+}
 
-    if($search){
-        $searchTerms = SearchTermExtractor::extractSearchTerms($search, '---', 1, 10);
-        $databaseSearcher = new DatabaseSearcher($pdo);
-        $results = $databaseSearcher->getSearchResults($searchTerms);
-        return $results;
-    }
-
-    if($day && $month) {
-        $databaseSearcher = new DatabaseSearcher($pdo);
-        $dailyFactInfo = $databaseSearcher->returnDailyFact($day, $month);
-        return $dailyFactInfo;
-    }
+function searchDataBaseByDate($day, $month, $pdo) {
+    $databaseSearcher = new DatabaseSearcher($pdo);
+    return $databaseSearcher->returnDailyFact($day, $month);
 }
 
 ?>
