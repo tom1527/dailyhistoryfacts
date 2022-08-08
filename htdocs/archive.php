@@ -15,9 +15,9 @@ $sortByValues = [
     ['option' => 'dateDES', 'label' => 'Date Descending'] 
 ];
 
-$pageNo = isset($_GET['pageNo']) ? $_GET['pageNo'] : "";
+$pageNo = isset($_GET['pageNo']) ? $_GET['pageNo'] : 0;
 
-$limitBy = isset($_GET['limitBy']) ? $_GET['limitBy'] : "";
+$limitBy = isset($_GET['limitBy']) ? $_GET['limitBy'] : 5;
 
 $limitByValues = [
     ['option' => '5'],
@@ -27,7 +27,7 @@ $limitByValues = [
 ];
 
 if($searchBarValue){
-    $searchTerms = SearchTermExtractor::extractSearchTerms($searchBarValue, $sortBy, $pageNo, $limitBy);
+    $searchTerms = SearchParameterBuilder::buildSearchParameters($searchBarValue, $sortBy, $pageNo, $limitBy);
     try {
         $pdo = DatabaseConn::connect();
     } catch(DatabaseConnectionException $exception) {
