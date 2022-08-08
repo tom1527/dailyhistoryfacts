@@ -7,9 +7,9 @@ class DatabaseSearcher {
 
     public function getSearchResults(array $searchTerms): array {
         $sortBy = $searchTerms['sortBy'];
-        $limit = $searchTerms['limitBy'];
-        $offset = $searchTerms['offset'];
- 
+        $maxResults = $searchTerms['maxResults'];
+        $pageNo = $searchTerms['pageNo'];
+
         switch($sortBy){
             case "dateASC":
                 $sortBy = "ORDER BY `month` ASC, `day` ASC";
@@ -22,10 +22,16 @@ class DatabaseSearcher {
                 break;
         }
 
-        if($limit != null) {
-            $limitBySQLClause = "LIMIT $limit";
+        if($maxResults != null) {
+            $limitBySQLClause = "LIMIT $maxResults";
         } else {
             $limitBySQLClause = "";
+        }
+        
+        if($maxResults != "") {
+            $offset = $this->calculateOffset($pageNo, $maxResults);
+        } else {
+            $offset = null;            
         }
 
         if($offset != null) {
@@ -69,5 +75,9 @@ class DatabaseSearcher {
 
         $results = $stmt->fetchAll();
         return $results;
+    }
+
+    private function calculateOffset($pageNo, $maxResults) {
+        return ($pageNo - 1) * $maxResults;
     }
 }
