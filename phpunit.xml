@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit cacheResultFile="tests/.phpunit.result.cache">
+<phpunit bootstrap="vendor/autoload.php"  cacheResultFile="tests/.phpunit.result.cache">
+    <testsuites>
+        <testsuite name="Daily History Facts Tests">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
     <logging>
         <junit outputFile="tests/test_output.xml"/>
     </logging>
