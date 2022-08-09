@@ -22,23 +22,9 @@ class DatabaseSearcher {
                 break;
         }
 
-        if($maxResults != null) {
-            $limitBySQLClause = "LIMIT $maxResults";
-        } else {
-            $limitBySQLClause = "";
-        }
-        
-        if($maxResults != "") {
-            $offset = $this->calculateOffset($pageNo, $maxResults);
-        } else {
-            $offset = null;            
-        }
+        $limitBySQLClause = empty($maxResults) ? "" : "LIMIT $maxResults";
 
-        if($offset != null) {
-            $offsetSQLClause = "OFFSET $offset";
-        } else {
-            $offsetSQLClause = "";
-        }
+        $offsetSQLClause = empty($maxResults) ? "" : "OFFSET " . $this->calculateOffset($pageNo, $maxResults);
 
         $sql = "SELECT * FROM `facts` WHERE `fact` LIKE CONCAT('%', :searchTerm, '%') $sortBy $limitBySQLClause $offsetSQLClause";
         $stmt = $this->pdo->prepare($sql);
