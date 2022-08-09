@@ -15,9 +15,9 @@ $sortByValues = [
     ['option' => 'dateDES', 'label' => 'Date Descending'] 
 ];
 
-$pageNo = isset($_GET['pageNo']) ? $_GET['pageNo'] : 0;
+$pageNo = (int) $_GET['pageNo'] ?? 1;
 
-$limitBy = isset($_GET['limitBy']) ? $_GET['limitBy'] : 5;
+$limitBy = (int) isset($_GET['limitBy']) ? $_GET['limitBy'] : 5;
 
 $limitByValues = [
     ['option' => '5'],
