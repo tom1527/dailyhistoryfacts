@@ -1,6 +1,4 @@
 <?php
-// require_once '../vendor/autoload.php';
-// use DatabaseConnectionException;
     class DatabaseConn {
         public static function connect(): PDO {
             $psw = getenv("MYSQL_ROOT_PASSWORD");
