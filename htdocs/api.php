@@ -5,6 +5,7 @@ $searchTerm = $_GET['search'] ?? null;
 $day = $_GET['day'] ?? null;
 $month = $_GET['month'] ?? null;
 
+ob_clean();
 try {
     $pdo = DatabaseConn::connect();
 } catch(DatabaseConnectionException $exception) {
