@@ -11,6 +11,16 @@
         {% endblock %}
     </head> 
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CWL8ZCQV2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-8CWL8ZCQV2');
+    </script>
+
 
     <header class="page-header text-center text-white p-3 bg-dark">
         {% block header %}
