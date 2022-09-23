@@ -144,28 +144,43 @@ function revealExtract() {
 }
 
 function selectFallbackFacts(factList) {
+    const firstFavouredYear = 1750;
+    const secondFavouredYear = 1850;
+    
     const facts = factList.events
+	var firstFavouredFact = selectClosestFact(facts, firstFavouredYear);
+	var secondFavouredFact = selectCloestFact(facts, secondFavouredYear);
+	
     var results = [];
-    for(var fact in facts) {
+    /* for(var fact in facts) {
         if(results.length == 2) { break; }
         if(!facts[fact].year || facts[fact].year > 1945) {
             continue;
         } else if(!facts[fact].pages) {
             continue;
         } else if(!facts[fact].text || !facts[fact].pages[0].extract_html) {
-            continue
+            continue;
         } else {
-            const result = {
+            var result = {
                 teaser: facts[fact].text,
                 year: facts[fact].year,
                 extract: facts[fact].pages[0].extract_html,
                 link: facts[fact].pages[0].content_urls.desktop.page,
                 ...(facts[fact].pages[0].originalimage) && {image: facts[fact].pages[0].originalimage.source}
             }
-            results.push(result);
+// 			results.push(result);
         }
-    } 
+    } */
+	results.push(firstFavouredFact, secondFavouredFact);
     return results;
+}
+
+function selectClosestFact(facts, favouredYear) {
+	foreach (fact in facts){
+	if abs (favouredYear - fact.year) < abs (favouredYear - favouredFact.year):
+		favouredFact = fact
+	}
+	return favouredFact;
 }
 
 function changeFact() {
