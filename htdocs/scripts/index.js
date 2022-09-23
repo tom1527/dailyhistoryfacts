@@ -149,7 +149,7 @@ function selectFallbackFacts(factList) {
     
     const facts = factList.events
 	var firstFavouredFact = selectClosestFact(facts, firstFavouredYear);
-	var secondFavouredFact = selectCloestFact(facts, secondFavouredYear);
+	var secondFavouredFact = selectClosestFact(facts, secondFavouredYear);
 	
     var results = [];
     /* for(var fact in facts) {
