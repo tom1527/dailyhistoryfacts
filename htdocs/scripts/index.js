@@ -88,6 +88,7 @@ function makeFallbackRequest(day, month) {
         if(response.status == 200) {
             response.json().then((factList)=>{
                 const results = selectFallbackFacts(factList);
+                window.extractSpans = [];
                 for(i = 0; i < results.length; i++) {
                     const result = results[i];
                     const fact = document.getElementById(`fact${i+1}`);
@@ -111,18 +112,23 @@ function makeFallbackRequest(day, month) {
                         fact.after(extractDiv);
                         var extractButton = document.createElement("button");
                         var extractSpan = document.createElement("span"); 
+                        window.extractSpans.push(`extractSpan${i+1}`);
                         extractDiv.appendChild(extractSpan);
                         extractButton.innerText = "Expand";
                         extractButton.addEventListener('click', function(e){
-                            if(document.getElementById("extractSpan").style.display == "none") {
-                                e.currentTarget.innerText = "Collapse";
-                                document.getElementById("extractSpan").style.display = "block";
-                            } else {
-                                e.currentTarget.innerText = "Expand";
-                                document.getElementById("extractSpan").style.display = "none";
+                            for(var n = 1; n <= extractSpans.length; n++) {
+                                var extractspan = document.getElementById(`extractSpan${n}`)
+                                if(document.getElementById(`extractSpan${n}`).style.display == "none") {
+                                    e.currentTarget.innerText = "Collapse";
+                                    document.getElementById(`extractSpan${n}`).style.display = "block";
+                                    console.log(document.getElementById(`extractSpan${n}`))
+                                } else {
+                                    e.currentTarget.innerText = "Expand";
+                                    document.getElementById(`extractSpan${n}`).style.display = "none";
+                                }
                             }
                         } );
-                        extractSpan.id = "extractSpan";
+                        extractSpan.id = `extractSpan${i + 1}`;
                         extractSpan.innerHTML = result.extract;
                         extractSpan.style.display = "none";
 
