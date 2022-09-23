@@ -180,7 +180,13 @@ function selectClosestFact(facts, favouredYear) {
     favouredFact.year = 0;
     for (var fact of facts){
         if (Math.abs (favouredYear - fact.year) < Math.abs (favouredYear - favouredFact.year)) {
-            favouredFact = fact
+            favouredFact = {
+                teaser: fact.text,
+                year: fact.year,
+                extract: fact.pages[0].extract_html,
+                link: fact.pages[0].content_urls.desktop.page,
+                ...(fact.pages[0].originalimage) && {image: fact.pages[0].originalimage.source}
+            }
         }
     }
     return favouredFact;
