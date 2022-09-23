@@ -178,7 +178,7 @@ function selectFallbackFacts(factList) {
 function selectClosestFact(facts, favouredYear) {
     var favouredFact = {};
     favouredFact.year = 0;
-    for (var fact in facts){
+    for (var fact of facts){
         if (Math.abs (favouredYear - fact.year) < Math.abs (favouredYear - favouredFact.year)) {
             favouredFact = fact
         }
