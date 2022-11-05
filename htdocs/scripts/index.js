@@ -55,10 +55,7 @@ function getFact(month, day) {
     
     let div=document.getElementById("daily-fact");
     
-        console.log("Loading fact...");
     fetch(dailyFactDate).then((response) => {
-        console.log(response.status);
-        // if(response.status == 200) {
         response.text().then(html => {
             div.innerHTML = html;
             if(response.status != 400) {
@@ -113,29 +110,17 @@ function makeFallbackRequest(day, month) {
                         var extractButton = document.createElement("button");
                         var extractSpan = document.createElement("span"); 
                         window.extractSpans.push(`extractSpan${i+1}`);
-                        extractDiv.appendChild(extractSpan);
+                        
                         extractButton.innerText = "Expand";
-                        extractButton.addEventListener('click', function(e){
-                            for(var n = 1; n <= extractSpans.length; n++) {
-                                var extractspan = document.getElementById(`extractSpan${n}`)
-                                if(document.getElementById(`extractSpan${n}`).style.display == "none") {
-                                    e.currentTarget.innerText = "Collapse";
-                                    document.getElementById(`extractSpan${n}`).style.display = "block";
-                                    console.log(document.getElementById(`extractSpan${n}`))
-                                } else {
-                                    e.currentTarget.innerText = "Expand";
-                                    document.getElementById(`extractSpan${n}`).style.display = "none";
-                                }
-                            }
-                        } );
+                        extractButton.id = `extractButton${i+1}`;
+                        extractButton.addEventListener('click', expandFact);
+
                         extractSpan.id = `extractSpan${i + 1}`;
                         extractSpan.innerHTML = result.extract;
                         extractSpan.style.display = "none";
 
+                        extractDiv.appendChild(extractSpan);
                         extractDiv.appendChild(extractButton);
-                       
-
-                        
                     }
 
                     fact.parentNode.appendChild(div.cloneNode(true));
@@ -158,25 +143,6 @@ function selectFallbackFacts(factList) {
 	var secondFavouredFact = selectClosestFact(facts, secondFavouredYear);
 	
     var results = [];
-    /* for(var fact in facts) {
-        if(results.length == 2) { break; }
-        if(!facts[fact].year || facts[fact].year > 1945) {
-            continue;
-        } else if(!facts[fact].pages) {
-            continue;
-        } else if(!facts[fact].text || !facts[fact].pages[0].extract_html) {
-            continue;
-        } else {
-            var result = {
-                teaser: facts[fact].text,
-                year: facts[fact].year,
-                extract: facts[fact].pages[0].extract_html,
-                link: facts[fact].pages[0].content_urls.desktop.page,
-                ...(facts[fact].pages[0].originalimage) && {image: facts[fact].pages[0].originalimage.source}
-            }
-// 			results.push(result);
-        }
-    } */
 	results.push(firstFavouredFact, secondFavouredFact);
     return results;
 }
@@ -205,6 +171,19 @@ function changeFact() {
     changeVisibility(last);
     document.getElementById("lastFactDate").innerHTML = factDate;
 } 
+
+function expandFact(event) {
+        const button = event.currentTarget;
+        const extractNumber = button.id.substring(13);
+        var extract = document.getElementById(`extractSpan${extractNumber}`);
+        if(extract.style.display == "none") {
+            button.innerText = "Collapse";
+            extract.style.display = "block";
+        } else {
+            button.innerText = "Expand";
+            extract.style.display = "none";
+        }                           
+}
 
 function changeVisibility(element) {
     if(element.style.display === "none") {
